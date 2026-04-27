@@ -691,11 +691,12 @@ function noSess(title,sub){
 }
 
 function V_aw(){
-  if(!isSun())return noSess('No Active Session','Voting opens every Sunday at 9:30 AM Alberta time.');
-  if(!after930())return noSess('Opens Soon','Voting begins at 9:30 AM Alberta time today.');
-  if(!before7pm())return noSess('Voting Closed','Check-in closed at 7:00 PM. Results can still be recorded below.');
+  const banner=fmtBanner(true);
+  if(!isSun())return banner+noSess('No Active Session','Voting opens every Sunday at 9:30 AM Alberta time.');
+  if(!after930())return banner+noSess('Opens Soon','Voting begins at 9:30 AM Alberta time today.');
+  if(!before7pm())return banner+noSess('Voting Closed','Check-in closed at 7:00 PM. Results can still be recorded below.');
   const key=todayKey();const week=ST.weeks[key]||{date:key,votes:[],locked:false,teams:null};
-  return fmtBanner(true)+weekHTML(week,true);
+  return banner+weekHTML(week,true);
 }
 
 function V_ah(){
