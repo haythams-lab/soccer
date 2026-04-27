@@ -1,0 +1,582 @@
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d2545;--navy2:#1b3d6e;--red:#d92b2b;--blue:#1d4ed8;--bg:#eef2f7;--card:#fff;--text:#111827;--t2:#6b7280;--t3:#9ca3af;--bdr:rgba(0,0,0,.07);--sh:0 2px 14px rgba(13,37,69,.09);--sh2:0 6px 28px rgba(13,37,69,.14);--r:14px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body,#la{font-family:'DM Sans',-apple-system,sans-serif;color:var(--text);background:var(--bg);}
+/* LOGIN */
+.lwrap{min-height:600px;background:linear-gradient(155deg,#060e1c 0%,#0d2545 55%,#163260 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.25rem;animation:fUp .5s ease;}
+.lbadge{width:82px;height:82px;border-radius:50%;background:rgba(255,255,255,.06);border:2.5px solid var(--red);display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 0 0 8px rgba(217,43,43,.12),0 16px 50px rgba(0,0,0,.35);}
+.ltitle{font-family:'Barlow Condensed',Impact,sans-serif;font-size:34px;font-weight:700;color:#fff;letter-spacing:.05em;margin-bottom:4px;}
+.lsub{font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.14em;margin-bottom:28px;}
+.lcard{width:100%;max-width:380px;background:#fff;border-radius:20px;padding:28px 24px 22px;box-shadow:0 28px 80px rgba(0,0,0,.38);}
+.lcard h3{font-size:14px;font-weight:500;color:var(--text);margin-bottom:20px;}
+.lf{margin-bottom:15px;}
+.lf label{display:block;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--t2);margin-bottom:6px;}
+.lf input{width:100%;padding:11px 13px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color .2s;}
+.lf input:focus{border-color:var(--navy);}
+.lerr{font-size:12px;color:var(--red);margin-bottom:10px;display:none;}
+.lbtn{width:100%;background:var(--navy);color:#fff;border:none;border-radius:11px;padding:13px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s,transform .1s;}
+.lbtn:hover{background:var(--navy2);}
+.lbtn:active{transform:scale(.98);}
+.lhint{font-size:11px;color:var(--t3);text-align:center;margin-top:12px;}
+/* HEADER */
+.ahdr{background:var(--navy);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;color:#fff;}
+.ahdr-ico{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ahdr-nm{font-family:'Barlow Condensed',Impact,sans-serif;font-size:17px;font-weight:700;letter-spacing:.04em;}
+.ahdr-rl{font-size:10px;opacity:.45;margin-top:1px;}
+.sout{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;padding:5px 12px;border-radius:7px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.sout:hover{background:rgba(255,255,255,.18);}
+/* NAV — always visible, wraps on small screens */
+.anav{background:#fff;display:flex;flex-wrap:wrap;border-bottom:1.5px solid var(--bdr);}
+.atab{flex:1 1 auto;min-width:0;padding:11px 4px;border:none;background:transparent;font-family:'Barlow Condensed',Impact,sans-serif;font-size:14px;font-weight:600;letter-spacing:.03em;color:var(--t3);cursor:pointer;text-align:center;border-bottom:2.5px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;}
+.atab.on{color:var(--navy);border-bottom-color:var(--red);}
+.atab:hover:not(.on){color:var(--t2);}
+/* CONTENT */
+#lc{padding:14px;animation:fUp .25s ease;}
+/* CARDS */
+.card{background:#fff;border-radius:var(--r);padding:16px 18px;margin-bottom:11px;box-shadow:var(--sh);}
+.sec{background:#f4f7fb;border-radius:var(--r);padding:14px 18px;margin-bottom:11px;border:1px solid var(--bdr);}
+/* BUTTONS */
+.btn{padding:7px 14px;border-radius:8px;border:1.5px solid #e5e7eb;background:transparent;cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;color:var(--text);transition:background .15s;}
+.btn:hover{background:#f9fafb;}
+.btn-p{background:var(--navy)!important;color:#fff!important;border-color:var(--navy)!important;}
+.btn-p:hover{background:var(--navy2)!important;}
+.btn-d{background:#fef2f2!important;color:#dc2626!important;border-color:#fca5a5!important;}
+.btn-s{background:#f0fdf4!important;color:#16a34a!important;border-color:#86efac!important;}
+.btn-w{background:#fffbeb!important;color:#b45309!important;border-color:#fde68a!important;}
+.bsm{padding:4px 10px!important;font-size:12px!important;}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;}
+.bs{background:#dcfce7;color:#15803d;}.bd{background:#fee2e2;color:#dc2626;}.bi{background:#dbeafe;color:#1d4ed8;}.bw{background:#fef3c7;color:#b45309;}
+/* FORMS */
+.fg{display:flex;flex-direction:column;margin-bottom:12px;}
+.fg label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.09em;color:var(--t2);margin-bottom:6px;}
+.fg input,.fg select{width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;outline:none;transition:border-color .2s;}
+.fg input:focus,.fg select:focus{border-color:var(--navy);}
+/* PLAYER CARDS */
+.plcard{display:flex;align-items:flex-start;gap:11px;padding:13px 15px;background:#fff;border-radius:12px;margin-bottom:8px;box-shadow:var(--sh);transition:transform .15s,box-shadow .15s;}
+.plcard:hover{transform:translateY(-1px);box-shadow:var(--sh2);}
+/* SKILL BARS */
+.sb{display:flex;align-items:center;gap:5px;margin:2px 0;}
+.sb-l{font-size:10px;color:var(--t3);width:40px;flex-shrink:0;}
+.sb-t{flex:1;height:3px;background:#f3f4f6;border-radius:2px;overflow:hidden;}
+.sb-f{height:100%;border-radius:2px;}
+.sb-v{font-size:10px;color:var(--t3);width:12px;text-align:right;}
+/* OV BADGE */
+.ovb{border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;color:#fff;}
+.og{background:linear-gradient(135deg,#22c55e,#16a34a);}
+.ob{background:linear-gradient(135deg,#3b82f6,#1d4ed8);}
+.oa{background:linear-gradient(135deg,#f59e0b,#d97706);}
+.or{background:linear-gradient(135deg,#ef4444,#dc2626);}
+/* VOTER LIST */
+.vrow{display:flex;justify-content:space-between;align-items:center;padding:8px 11px;background:#f8fafc;border-radius:8px;margin-bottom:5px;}
+.vnum{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0;}
+/* TEAMS */
+.tcard{border-radius:13px;padding:14px 16px;margin-bottom:10px;border-left:4px solid;box-shadow:var(--sh);}
+.tc-r{border-left-color:var(--red);background:#fffafa;}
+.tc-w{border-left-color:#4b5563;background:#fff;}
+.tc-b{border-left-color:var(--blue);background:#f8faff;}
+.tc-s{border-left-color:#9ca3af;background:#f9fafb;}
+.tc-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.tcdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.tc-nm{font-family:'Barlow Condensed',Impact,sans-serif;font-size:17px;font-weight:700;letter-spacing:.02em;}
+.tc-avg{font-size:11px;color:var(--t2);margin-left:auto;font-weight:500;}
+.prow{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid #f3f4f6;}
+.prow:last-child{border-bottom:none;}
+/* PROGRESS */
+.prog{height:5px;background:#e5e7eb;border-radius:3px;overflow:hidden;margin-bottom:12px;}
+.prog-f{height:100%;background:linear-gradient(90deg,var(--navy),var(--navy2));border-radius:3px;transition:width .4s cubic-bezier(.4,0,.2,1);}
+/* HISTORY */
+.hrow{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;background:#fff;border-radius:12px;margin-bottom:7px;cursor:pointer;box-shadow:var(--sh);transition:transform .15s,box-shadow .15s;}
+.hrow:hover{transform:translateY(-1px);box-shadow:var(--sh2);}
+/* WINNERS */
+.wrow{display:flex;align-items:center;gap:11px;padding:10px 13px;background:#fff;border-radius:12px;margin-bottom:7px;box-shadow:var(--sh);}
+.wrnk{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;}
+.r1{background:linear-gradient(135deg,#ffd700,#f59e0b);color:#7c3a00;}.r2{background:linear-gradient(135deg,#e2e8f0,#cbd5e1);color:#334155;}.r3{background:linear-gradient(135deg,#d97706,#92400e);color:#fff;}.rn{background:#f3f4f6;color:var(--t2);}
+/* MISC */
+.divider{height:1px;background:#f3f4f6;margin:12px 0;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;}
+.sec-title{font-family:'Barlow Condensed',Impact,sans-serif;font-size:21px;font-weight:700;letter-spacing:.02em;color:var(--navy);}
+.empty-s{text-align:center;padding:2.5rem 1rem;color:var(--t2);font-size:13px;}
+.wdate{font-family:'Barlow Condensed',Impact,sans-serif;font-size:19px;font-weight:700;color:var(--navy);letter-spacing:.02em;}
+.sk-row{margin-bottom:10px;}
+.sk-row label{display:flex;justify-content:space-between;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--t2);margin-bottom:4px;}
+.sk-row input[type=range]{width:100%;accent-color:var(--navy);}
+input[type=number]{padding:9px 11px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;width:100%;}
+input[type=number]:focus{border-color:var(--navy);}
+.adv-row{display:flex;gap:8px;align-items:center;}
+.adv-row input{flex:1;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+.adv-row input:focus{border-color:var(--navy);}
+.nosession{min-height:220px;background:linear-gradient(155deg,#060e1c,#0d2545);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;margin-bottom:11px;color:#fff;text-align:center;}
+.ns-ico{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.ns-title{font-family:'Barlow Condensed',Impact,sans-serif;font-size:21px;font-weight:700;letter-spacing:.04em;margin-bottom:5px;}
+.ns-sub{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:12px;}
+.ns-clock{font-family:'Barlow Condensed',Impact,sans-serif;font-size:22px;font-weight:700;letter-spacing:.06em;color:rgba(255,255,255,.65);}
+/* FORMAT PILL */
+.fmt-pill{display:inline-flex;background:#f3f4f6;border-radius:10px;padding:3px;gap:2px;}
+.fmt-opt{padding:6px 14px;border-radius:8px;border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:'Barlow Condensed',Impact,sans-serif;letter-spacing:.04em;color:var(--t2);background:transparent;transition:all .15s;}
+.fmt-opt.on{background:var(--navy);color:#fff;box-shadow:0 1px 6px rgba(13,37,69,.25);}
+/* SETTINGS BANNER */
+.sfmt{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(90deg,#f0f4ff,#e8f0fe);border-radius:10px;margin-bottom:11px;border:1px solid #c7d7fe;flex-wrap:wrap;}
+.sfmt-lbl{font-size:12px;font-weight:500;color:var(--navy2);flex:1;min-width:120px;}
+@keyframes fUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:420px){
+  .g3{grid-template-columns:1fr 1fr;gap:7px;}
+  .tc-nm{font-size:15px;}
+  .atab{font-size:13px;padding:10px 2px;}
+}
+</style>
+<div id="la">
+  <div id="lh" style="display:none;"></div>
+  <div id="ln" style="display:none;"></div>
+  <div id="lc" style="padding:14px;"></div>
+</div>
+<script>
+const ADMIN={u:'LUESadmin',p:'Lacombe202620252024!@'};
+const USR={u:'LUESuser',p:'Users2026!!'};
+/* team format: {mode:'3x5'|'2x7', perTeam:5|7, teams:3|2, target:15|14} */
+let ST={user:null,players:[],weeks:{},view:'login',editId:null,historyKey:null,monthFilter:null,
+  fmt:{mode:'3x5',perTeam:5,teams:3,target:15}};
+let pendingPhoto=null;
+const hasST=typeof window!=='undefined'&&window.storage;
+
+function getFmt(){return ST.fmt||{mode:'3x5',perTeam:5,teams:3,target:15};}
+
+async function SAVE(){if(!hasST)return;try{await window.storage.set('lues_p',JSON.stringify(ST.players.map(p=>({...p,photo:undefined}))));await window.storage.set('lues_w',JSON.stringify(ST.weeks));await window.storage.set('lues_fmt',JSON.stringify(ST.fmt));}catch(e){}}
+async function savePh(id,d){if(!hasST)return;try{await window.storage.set('lues_ph_'+id,d);}catch(e){}}
+async function LOAD(){
+  if(!hasST)return;
+  try{const r=await window.storage.get('lues_p');if(r)ST.players=JSON.parse(r.value);}catch(e){ST.players=[];}
+  try{const r=await window.storage.get('lues_w');if(r)ST.weeks=JSON.parse(r.value);}catch(e){ST.weeks={};}
+  try{const r=await window.storage.get('lues_fmt');if(r)ST.fmt={...ST.fmt,...JSON.parse(r.value)};}catch(e){}
+  for(const p of ST.players){try{const r=await window.storage.get('lues_ph_'+p.id);if(r)p.photo=r.value;}catch(e){}}
+}
+
+function getAB(){return new Date(new Date().toLocaleString('en-US',{timeZone:'America/Edmonton'}));}
+function isSun(){return getAB().getDay()===0;}
+function after930(){const t=getAB();return t.getHours()>9||(t.getHours()===9&&t.getMinutes()>=30);}
+function todayKey(){const t=getAB();return`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;}
+function fmtT(iso){return new Date(iso).toLocaleTimeString('en-US',{timeZone:'America/Edmonton',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});}
+function fmtD(k){return new Date(k+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});}
+function nowClock(){return new Date().toLocaleTimeString('en-US',{timeZone:'America/Edmonton',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function ini(n){return(n||'?').trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2);}
+function sAvg(sk){if(!sk)return 5;const v=Object.values(sk);return Math.round(v.reduce((a,b)=>a+b,0)/v.length);}
+function sCol(v){return v>=8?'#22c55e':v>=6?'#3b82f6':v>=4?'#f59e0b':'#ef4444';}
+function escH(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function ovCls(v){return v>=8?'og':v>=6?'ob':v>=4?'oa':'or';}
+
+function avH(name,photo,sz){
+  sz=sz||40;
+  const s=`width:${sz}px;height:${sz}px;border-radius:50%;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:${Math.round(sz*.32)}px;font-weight:500;`;
+  if(photo)return`<div style="${s}"><img src="${photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>`;
+  return`<div style="${s}background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;">${ini(name)}</div>`;
+}
+function sBars(sk){
+  if(!sk)return'';
+  return[['Speed','speed'],['Shoot','shooting'],['Pass','passing'],['Def','defense'],['Stam','stamina']].map(([l,k])=>{
+    const v=sk[k]||5;
+    return`<div class="sb"><span class="sb-l">${l}</span><div class="sb-t"><div class="sb-f" style="width:${v*10}%;background:${sCol(v)};"></div></div><span class="sb-v">${v}</span></div>`;
+  }).join('');
+}
+function pDL(){return`<datalist id="pl-dl">${ST.players.map(p=>`<option value="${escH(p.name)}">`).join('')}</datalist>`;}
+function ballSVG(sz,c){sz=sz||26;c=c||'white';return`<svg width="${sz}" height="${sz}" viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="14" stroke="${c}" stroke-width="1.5"/><ellipse cx="17" cy="17" rx="6" ry="14" stroke="${c}" stroke-width="1" fill="none"/><line x1="3" y1="17" x2="31" y2="17" stroke="${c}" stroke-width="1"/><path d="M3.8 11Q17 14 30.2 11" stroke="${c}" stroke-width="1" fill="none"/><path d="M3.8 23Q17 20 30.2 23" stroke="${c}" stroke-width="1" fill="none"/></svg>`;}
+
+/* ─── TEAM GENERATION ─── */
+function genTeams(votes){
+  const fmt=getFmt();
+  const T=fmt.target, nT=fmt.teams, perT=fmt.perTeam;
+  const first=votes.slice(0,T).map(v=>{
+    const pl=ST.players.find(p=>p.name.toLowerCase()===v.name.toLowerCase());
+    return{name:v.name,timestamp:v.timestamp,skills:pl&&pl.skills?pl.skills:{speed:5,shooting:5,passing:5,defense:5,stamina:5},photo:pl?pl.photo||null:null,overall:pl?sAvg(pl.skills):5};
+  });
+  const subs=votes.slice(T).map(v=>({name:v.name,timestamp:v.timestamp}));
+  first.sort((a,b)=>b.overall-a.overall);
+  const teams=Array.from({length:nT},()=>[]);
+  /* snake draft */
+  for(let i=0;i<first.length;i++){
+    const round=Math.floor(i/nT);
+    const pos=i%nT;
+    const ti=round%2===0?pos:(nT-1-pos);
+    teams[ti].push(first[i]);
+  }
+  if(nT===3)return{red:teams[0],white:teams[1],blue:teams[2],subs};
+  return{red:teams[0],white:teams[1],subs}; /* 2-team mode: red + white */
+}
+
+/* ─── VIEWS ─── */
+function V_login(){
+  return`<div class="lwrap">
+    <div class="lbadge">${ballSVG(34,'white')}</div>
+    <div class="ltitle">LUES Soccer Club</div>
+    <div class="lsub">Team Management &amp; Voting</div>
+    <div class="lcard">
+      <h3>Sign in to your account</h3>
+      <div class="lf"><label>Username</label><input id="li-u" type="text" placeholder="Enter username" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('li-p').focus()"></div>
+      <div class="lf"><label>Password</label><input id="li-p" type="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div id="li-e" class="lerr">Incorrect username or password.</div>
+      <button class="lbtn" onclick="doLogin()">Sign in</button>
+      <div class="lhint">Admin or member login</div>
+    </div>
+  </div>`;
+}
+
+function fmtBanner(editable){
+  const f=getFmt();
+  if(!editable)return`<div class="sfmt"><span class="sfmt-lbl">Today's format: <strong>${f.mode==='3x5'?'3 teams of 5':'2 teams of 7'}</strong> &nbsp;(${f.target} players needed)</span></div>`;
+  return`<div class="sfmt">
+    <span class="sfmt-lbl">Team format:</span>
+    <div class="fmt-pill">
+      <button class="fmt-opt${f.mode==='3x5'?' on':''}" onclick="setFmt('3x5')">3 × 5</button>
+      <button class="fmt-opt${f.mode==='2x7'?' on':''}" onclick="setFmt('2x7')">2 × 7</button>
+    </div>
+    <span style="font-size:11px;color:var(--t2);">${f.target} players needed</span>
+  </div>`;
+}
+
+async function setFmt(mode){
+  const m=mode==='2x7'?{mode:'2x7',perTeam:7,teams:2,target:14}:{mode:'3x5',perTeam:5,teams:3,target:15};
+  ST.fmt=m;await SAVE();renderV();
+}
+
+function V_ap(){
+  const isNew=ST.editId==='__new__';
+  const editing=isNew?null:ST.players.find(p=>p.id===ST.editId);
+  const showForm=ST.editId!==null;
+  let form='';
+  if(showForm){
+    const pl=editing||{name:'',skills:{speed:5,shooting:5,passing:5,defense:5,stamina:5},photo:null};
+    form=`<div class="card" style="border-top:3px solid var(--navy);margin-bottom:14px;">
+      <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);margin-bottom:14px;">${isNew?'New player':'Edit player'}</div>
+      <div class="fg"><label>Full name</label><input id="pf-n" type="text" value="${escH(pl.name||'')}" placeholder="Player's full name"></div>
+      <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.09em;color:var(--t2);margin-bottom:8px;">Skills (1–10)</div>
+      <div class="g2">
+        ${['speed','shooting','passing','defense','stamina'].map(k=>`<div class="sk-row">
+          <label>${k.charAt(0).toUpperCase()+k.slice(1)} <span id="pv-${k}" style="color:var(--navy);font-weight:600;">${pl.skills?pl.skills[k]||5:5}</span></label>
+          <input type="range" id="pf-${k}" min="1" max="10" step="1" value="${pl.skills?pl.skills[k]||5:5}" oninput="document.getElementById('pv-${k}').textContent=this.value">
+        </div>`).join('')}
+      </div>
+      <div class="divider"></div>
+      <div class="fg">
+        <label>Photo (optional · max 2 MB)</label>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div id="pf-av" style="width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;border:2px solid #e5e7eb;">${pl.photo?`<img src="${pl.photo}" style="width:100%;height:100%;object-fit:cover;">`:ini(pl.name||'?')}</div>
+          <input type="file" id="pf-ph" accept="image/*" onchange="prevPhoto(this)" style="font-size:12px;color:var(--t2);">
+        </div>
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:4px;">
+        <button class="btn btn-p" onclick="savePl('${isNew?'__new__':editing.id}')">Save player</button>
+        <button class="btn" onclick="cancelEdit()">Cancel</button>
+        ${!isNew?`<button class="btn btn-d bsm" onclick="delPl('${editing.id}')" style="margin-left:auto;">Delete</button>`:''}
+      </div>
+    </div>`;
+  }
+  const list=ST.players.length===0
+    ?`<div class="empty-s">${ballSVG(38,'#9ca3af')}<div style="margin-top:12px;">No players yet. Add your first!</div></div>`
+    :ST.players.map(p=>`<div class="plcard">
+        ${avH(p.name,p.photo,44)}
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:2px;">${escH(p.name)}</div>
+          <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;">
+            <div class="ovb ${ovCls(sAvg(p.skills))}" style="width:24px;height:24px;font-size:10px;">${sAvg(p.skills)}</div>
+            <span style="font-size:10px;color:var(--t2);">Overall</span>
+          </div>
+          ${sBars(p.skills)}
+        </div>
+        <button class="btn bsm" onclick="startEdit('${p.id}')" style="align-self:flex-start;">Edit</button>
+      </div>`).join('');
+  return(showForm?'':
+    `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+       <div class="sec-title">${ST.players.length} Player${ST.players.length!==1?'s':''}</div>
+       <button class="btn btn-p" onclick="startEdit('__new__')">+ Add</button>
+     </div>`)
+    +form+list;
+}
+
+function noSess(title,sub){return`<div class="nosession"><div class="ns-ico">${ballSVG(24,'rgba(255,255,255,.7)')}</div><div class="ns-title">${title}</div><div class="ns-sub">${sub}</div><div class="ns-clock" id="abclock">--:-- --</div></div>`;}
+
+function V_aw(){
+  if(!isSun())return noSess('No Active Session','Voting opens every Sunday at 9:30 AM Alberta time.');
+  if(!after930())return noSess('Opens Soon','Voting begins at 9:30 AM Alberta time today.');
+  const key=todayKey();
+  const week=ST.weeks[key]||{date:key,votes:[],locked:false,teams:null};
+  return fmtBanner(true)+weekHTML(week,true);
+}
+
+function V_ah(){
+  if(ST.historyKey){
+    const w=ST.weeks[ST.historyKey];if(!w){ST.historyKey=null;return V_ah();}
+    return`<button class="btn bsm" onclick="goBack()" style="margin-bottom:14px;">← Back</button><div class="wdate" style="margin-bottom:10px;">${fmtD(w.date)}</div>${weekHTML(w,true)}`;
+  }
+  const keys=Object.keys(ST.weeks).sort((a,b)=>b.localeCompare(a));
+  if(!keys.length)return`<div class="empty-s">${ballSVG(38,'#9ca3af')}<div style="margin-top:12px;">No history yet.</div></div>`;
+  return`<div class="sec-title" style="margin-bottom:12px;">Session History</div>`+keys.map(k=>{
+    const w=ST.weeks[k];
+    return`<div class="hrow" onclick="viewHist('${k}')">
+      <div><div style="font-size:13px;font-weight:500;">${fmtD(k)}</div><div style="font-size:11px;color:var(--t2);margin-top:2px;">${w.votes?w.votes.length:0} players · ${w.teams?'Teams generated':'No teams'} · ${w.gamesWon?'<span style="color:#16a34a;font-weight:500;">Results saved</span>':'No results'}</div></div>
+      <span style="font-size:18px;color:var(--t3);">›</span>
+    </div>`;
+  }).join('');
+}
+
+function V_am(){
+  const now=getAB();const curM=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  if(!ST.monthFilter)ST.monthFilter=curM;
+  const months=[...new Set(Object.keys(ST.weeks).map(k=>k.slice(0,7)))].sort((a,b)=>b.localeCompare(a));
+  if(months.length&&!months.includes(ST.monthFilter))ST.monthFilter=months[0];
+  const winners=mWinners(ST.monthFilter);
+  const mLabel=new Date(ST.monthFilter+'-15').toLocaleString('en-US',{month:'long',year:'numeric'});
+  return`<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+    <div class="sec-title">Leaderboard</div>
+    <select onchange="ST.monthFilter=this.value;renderV()" style="font-size:13px;padding:5px 9px;border:1.5px solid #e5e7eb;border-radius:8px;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;outline:none;">
+      ${months.length?months.map(m=>`<option value="${m}"${m===ST.monthFilter?' selected':''}>${new Date(m+'-15').toLocaleString('en-US',{month:'long',year:'numeric'})}</option>`).join(''):`<option value="${curM}">${mLabel}</option>`}
+    </select>
+  </div>
+  ${!winners.length
+    ?`<div class="empty-s">${ballSVG(38,'#9ca3af')}<div style="margin-top:12px;">No results for ${mLabel} yet.</div></div>`
+    :winners.map((w,i)=>{
+      const pl=ST.players.find(p=>p.name.toLowerCase()===w.name.toLowerCase());
+      return`<div class="wrow"><div class="wrnk ${i===0?'r1':i===1?'r2':i===2?'r3':'rn'}">${i+1}</div>${avH(w.name,pl?pl.photo:null,34)}<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:500;">${escH(w.name)}</div><div style="font-size:11px;color:var(--t2);margin-top:1px;">${w.wins} win${w.wins!==1?'s':''}</div></div>${i<3?`<div style="font-size:18px;">${i===0?'🥇':i===1?'🥈':'🥉'}</div>`:''}</div>`;
+    }).join('')}`;
+}
+
+function mWinners(prefix){
+  const wins={};
+  Object.entries(ST.weeks).forEach(([k,w])=>{
+    if(!k.startsWith(prefix)||!w.teams||!w.gamesWon)return;
+    ['red','white','blue'].forEach(c=>{
+      const g=w.gamesWon[c]||0;
+      if(g>0)(w.teams[c]||[]).forEach(p=>{wins[p.name]=(wins[p.name]||0)+g;});
+    });
+  });
+  return Object.entries(wins).map(([name,wins])=>({name,wins})).sort((a,b)=>b.wins-a.wins);
+}
+
+function V_uh(){
+  if(!isSun()||!after930()){
+    return noSess('Voting Not Open',!isSun()?'Voting is every Sunday at 9:30 AM Alberta time.':'Voting opens at 9:30 AM today.');
+  }
+  const key=todayKey();
+  const week=ST.weeks[key]||{date:key,votes:[],locked:false,teams:null};
+  const fmt=getFmt();
+  const isLocked=week.locked,vCount=week.votes?week.votes.length:0;
+  let vform='';
+  if(!isLocked&&vCount<fmt.target){
+    vform=`<div class="card" style="border-top:3px solid var(--navy);margin-bottom:11px;">
+      <div style="font-size:14px;font-weight:500;margin-bottom:3px;">Check in for today</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:12px;">Format: <strong>${fmt.mode==='3x5'?'3 teams of 5':'2 teams of 7'}</strong> · Locks at ${fmt.target} players</div>
+      ${pDL()}
+      <div class="adv-row">
+        <input id="uv-n" type="text" placeholder="Your full name" list="pl-dl" onkeydown="if(event.key==='Enter')userVote()">
+        <button class="btn btn-p bsm" onclick="userVote()">Check in</button>
+      </div>
+      <div id="uv-m" style="font-size:12px;margin-top:7px;min-height:16px;"></div>
+    </div>`;
+  }else{
+    vform=`<div class="sec" style="text-align:center;padding:10px;margin-bottom:11px;"><span class="badge bd" style="font-size:12px;">Voting closed — ${vCount}/${fmt.target} registered</span></div>`;
+  }
+  return vform+weekHTML(week,false);
+}
+
+function V_uhist(){
+  if(ST.historyKey){
+    const w=ST.weeks[ST.historyKey];if(!w){ST.historyKey=null;return V_uhist();}
+    return`<button class="btn bsm" onclick="goBack()" style="margin-bottom:14px;">← Back</button><div class="wdate" style="margin-bottom:10px;">${fmtD(w.date)}</div>${weekHTML(w,false)}`;
+  }
+  const keys=Object.keys(ST.weeks).sort((a,b)=>b.localeCompare(a));
+  if(!keys.length)return`<div class="empty-s">${ballSVG(38,'#9ca3af')}<div style="margin-top:12px;">No history yet.</div></div>`;
+  return`<div class="sec-title" style="margin-bottom:12px;">Past Sessions</div>`+keys.map(k=>{
+    const w=ST.weeks[k];
+    return`<div class="hrow" onclick="viewHist('${k}')"><div><div style="font-size:13px;font-weight:500;">${fmtD(k)}</div><div style="font-size:11px;color:var(--t2);margin-top:2px;">${w.votes?w.votes.length:0} players</div></div><span style="font-size:18px;color:var(--t3);">›</span></div>`;
+  }).join('');
+}
+
+function weekHTML(week,isAdmin){
+  if(!week)return'';
+  const fmt=getFmt();
+  const votes=week.votes||[],isLocked=week.locked,vCount=votes.length,hasTeams=!!week.teams;
+  const pct=Math.min(100,Math.round(vCount/fmt.target*100));
+  const quotaReached=vCount>=fmt.target||isLocked;
+
+  const voterList=`<div class="card" style="margin-bottom:11px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:7px;">
+      <div>
+        <div class="wdate" style="margin-bottom:5px;">${fmtD(week.date)}</div>
+        <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:var(--t2);">${vCount}/${fmt.target}</span>
+          ${isLocked?`<span class="badge bd">Locked</span>`:`<span class="badge bs">Open</span>`}
+        </div>
+      </div>
+      ${isAdmin?`<div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
+        <button class="btn bsm ${isLocked?'btn-w':'btn-d'}" onclick="toggleLock('${week.date}')">${isLocked?'Unlock':'Lock'}</button>
+        ${quotaReached?`<button class="btn bsm btn-p" onclick="doGenT('${week.date}')">${hasTeams?'Regen':'Gen teams'}</button>`:''}</div>`:''}
+    </div>
+    <div class="prog"><div class="prog-f" style="width:${pct}%;"></div></div>
+    ${votes.length===0?`<div style="font-size:12px;color:var(--t2);text-align:center;padding:12px 0;">No players registered yet.</div>`:''}
+    ${votes.map((v,i)=>{
+      const pl=ST.players.find(p=>p.name.toLowerCase()===v.name.toLowerCase());
+      const main=i<fmt.target;
+      return`<div class="vrow">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="vnum" style="background:${main?'var(--navy)':'#9ca3af'};color:white;">${i+1}</div>
+          ${pl&&pl.photo?`<div style="width:22px;height:22px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="${pl.photo}" style="width:100%;height:100%;object-fit:cover;"></div>`:''}
+          <span style="font-size:12px;font-weight:${main?500:400};">${escH(v.name)}</span>
+          ${!main?`<span class="badge bw" style="font-size:10px;padding:1px 6px;">Sub</span>`:''}
+          ${!pl?`<span class="badge" style="background:#fef3c7;color:#92400e;font-size:10px;padding:1px 5px;">Not in roster</span>`:''}
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <span style="font-size:10px;color:var(--t3);">${fmtT(v.timestamp)}</span>
+          ${isAdmin?`<button class="btn bsm btn-d" onclick="rmV('${week.date}',${i})" style="padding:2px 6px!important;font-size:11px!important;">×</button>`:''}
+        </div>
+      </div>`;
+    }).join('')}
+    ${isAdmin&&!isLocked?`<div class="divider"></div>
+      <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);margin-bottom:7px;">Add manually</div>
+      ${pDL()}<div class="adv-row">
+        <input id="av-n" type="text" placeholder="Player name" list="pl-dl" onkeydown="if(event.key==='Enter')adminAV('${week.date}')">
+        <button class="btn bsm btn-p" onclick="adminAV('${week.date}')">Add</button>
+      </div>`:''}
+  </div>`;
+
+  /* SUBS — always shown once quota reached */
+  let subsHTML='';
+  if(quotaReached){
+    const subsData=hasTeams&&week.teams&&week.teams.subs?week.teams.subs:votes.slice(fmt.target).map(v=>({name:v.name,timestamp:v.timestamp}));
+    subsHTML=`<div class="tcard tc-s">
+      <div class="tc-hdr">
+        <div class="tcdot" style="background:#9ca3af;"></div>
+        <span class="tc-nm" style="color:var(--t2);">Substitutes (${subsData.length})</span>
+      </div>
+      ${subsData.length===0?`<div style="font-size:12px;color:var(--t2);">No subs this session.</div>`:subsData.map(s=>`<div class="prow">${avH(s.name,null,26)}<span style="font-size:12px;flex:1;">${escH(s.name)}</span><span style="font-size:10px;color:var(--t3);">${fmtT(s.timestamp)}</span></div>`).join('')}
+    </div>`;
+  }
+
+  let teamsHTML='';
+  if(hasTeams&&week.teams){
+    const t=week.teams;
+    teamsHTML=`<div class="sec-title" style="margin-bottom:9px;">Teams</div>`;
+    const teamDefs=fmt.mode==='2x7'
+      ?[{k:'red',lbl:'Red Team',cls:'tc-r',dot:'#d92b2b'},{k:'white',lbl:'White Team',cls:'tc-w',dot:'#4b5563'}]
+      :[{k:'red',lbl:'Red Team',cls:'tc-r',dot:'#d92b2b'},{k:'white',lbl:'White Team',cls:'tc-w',dot:'#4b5563'},{k:'blue',lbl:'Blue Team',cls:'tc-b',dot:'#1d4ed8'}];
+    teamDefs.forEach(d=>{
+      const players=t[d.k]||[];
+      const avg=players.length?Math.round(players.reduce((s,p)=>s+p.overall,0)/players.length):0;
+      teamsHTML+=`<div class="tcard ${d.cls}"><div class="tc-hdr"><div class="tcdot" style="background:${d.dot};"></div><span class="tc-nm">${d.lbl}</span><span class="tc-avg">Avg ${avg}/10</span></div>
+        ${players.map(p=>{const rp=ST.players.find(r=>r.name.toLowerCase()===p.name.toLowerCase());return`<div class="prow">${avH(p.name,(rp&&rp.photo)||p.photo,30)}<span style="font-size:12px;font-weight:500;flex:1;">${escH(p.name)}</span><div class="ovb ${ovCls(p.overall)}" style="width:26px;height:26px;font-size:10px;">${p.overall}</div></div>`;}).join('')}
+      </div>`;
+    });
+    if(isAdmin){
+      const gw=week.gamesWon||{red:0,white:0,blue:0};
+      const cols=fmt.mode==='2x7'?[['red','#d92b2b'],['white','#4b5563']]:[['red','#d92b2b'],['white','#4b5563'],['blue','#1d4ed8']];
+      teamsHTML+=`<div class="card" style="border-top:3px solid var(--navy);">
+        <div style="font-size:14px;font-weight:500;margin-bottom:3px;">Record results</div>
+        <div style="font-size:11px;color:var(--t2);margin-bottom:12px;">Games won by each team today.</div>
+        <div class="${fmt.mode==='2x7'?'g2':'g3'}">
+          ${cols.map(([c,col])=>`<div><div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;"><div style="width:8px;height:8px;border-radius:50%;background:${col};"></div><span style="font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--t2);font-weight:500;">${c} wins</span></div><input type="number" id="gw-${c}" min="0" max="99" value="${gw[c]||0}"></div>`).join('')}
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+          <button class="btn btn-p bsm" onclick="saveGW('${week.date}')">Save</button>
+          ${week.gamesWon?`<span style="font-size:12px;color:#16a34a;font-weight:500;">✓ Saved</span>`:''}
+        </div>
+      </div>`;
+    }
+  }
+  return voterList+(teamsHTML||'')+subsHTML;
+}
+
+/* ─── RENDER ─── */
+function renderV(){
+  const lh=document.getElementById('lh'),ln=document.getElementById('ln'),lc=document.getElementById('lc');
+  if(!ST.user){lh.style.display='none';ln.style.display='none';lc.style.padding='0';lc.innerHTML=V_login();return;}
+  const isAdmin=ST.user.role==='admin';
+  lh.style.display='block';
+  lh.innerHTML=`<div class="ahdr">
+    <div style="display:flex;align-items:center;gap:9px;">
+      <div class="ahdr-ico">${ballSVG(18,'rgba(255,255,255,.85)')}</div>
+      <div><div class="ahdr-nm">LUES Soccer Club</div><div class="ahdr-rl">${isAdmin?'Administrator':'Member'}</div></div>
+    </div>
+    <button class="sout" onclick="doLogout()">Sign out</button>
+  </div>`;
+  /* All 4 admin tabs always visible — Barlow Condensed keeps them compact */
+  const navItems=isAdmin
+    ?[['ap','Players'],['aw','This Week'],['ah','History'],['am','Dashboard']]
+    :[['uh','Vote'],['uhist','History']];
+  ln.style.display='block';
+  ln.innerHTML=`<div class="anav">${navItems.map(([id,lbl])=>`<button class="atab ${ST.view===id?'on':''}" onclick="navTo('${id}')">${lbl}</button>`).join('')}</div>`;
+  lc.style.padding='14px';
+  lc.innerHTML='';
+  void lc.offsetWidth;
+  lc.style.animation='fUp .22s ease';
+  const views={ap:V_ap,aw:V_aw,ah:V_ah,am:V_am,uh:V_uh,uhist:V_uhist};
+  lc.innerHTML=(views[ST.view]||V_login)();
+}
+
+/* ─── ACTIONS ─── */
+function doLogin(){
+  const u=(document.getElementById('li-u')?.value||'').trim(),p=document.getElementById('li-p')?.value||'';
+  if(u===ADMIN.u&&p===ADMIN.p){ST.user={role:'admin'};ST.view='aw';renderV();return;}
+  if(u===USR.u&&p===USR.p){ST.user={role:'user'};ST.view='uh';renderV();return;}
+  const e=document.getElementById('li-e');if(e)e.style.display='block';
+}
+function doLogout(){ST.user=null;ST.view='login';ST.editId=null;ST.historyKey=null;pendingPhoto=null;renderV();}
+function navTo(v){ST.view=v;ST.historyKey=null;renderV();}
+function viewHist(k){ST.historyKey=k;renderV();}
+function goBack(){ST.historyKey=null;renderV();}
+function startEdit(id){ST.editId=id;pendingPhoto=null;renderV();}
+function cancelEdit(){ST.editId=null;pendingPhoto=null;renderV();}
+function prevPhoto(input){
+  const f=input.files[0];if(!f)return;
+  if(f.size>2*1024*1024){alert('Max 2 MB.');return;}
+  const r=new FileReader();r.onload=e=>{pendingPhoto=e.target.result;const av=document.getElementById('pf-av');if(av)av.innerHTML=`<img src="${pendingPhoto}" style="width:100%;height:100%;object-fit:cover;">`;};r.readAsDataURL(f);
+}
+async function savePl(editId){
+  const name=(document.getElementById('pf-n')?.value||'').trim();if(!name){alert('Enter a name.');return;}
+  const skills={};['speed','shooting','passing','defense','stamina'].forEach(k=>{skills[k]=parseInt(document.getElementById('pf-'+k)?.value||5);});
+  if(editId==='__new__'){const id=uid();ST.players.push({id,name,skills,photo:pendingPhoto||null});if(pendingPhoto)await savePh(id,pendingPhoto);}
+  else{const idx=ST.players.findIndex(p=>p.id===editId);if(idx>=0){ST.players[idx]={...ST.players[idx],name,skills};if(pendingPhoto){ST.players[idx].photo=pendingPhoto;await savePh(editId,pendingPhoto);}}}
+  pendingPhoto=null;ST.editId=null;await SAVE();renderV();
+}
+async function delPl(id){if(!confirm('Delete this player?'))return;ST.players=ST.players.filter(p=>p.id!==id);ST.editId=null;await SAVE();renderV();}
+async function userVote(){
+  const name=(document.getElementById('uv-n')?.value||'').trim(),msg=document.getElementById('uv-m');
+  if(!name){if(msg)msg.innerHTML=`<span style="color:var(--red);">Enter your name.</span>`;return;}
+  const fmt=getFmt(),key=todayKey();
+  if(!ST.weeks[key])ST.weeks[key]={date:key,votes:[],locked:false,teams:null};
+  const week=ST.weeks[key];
+  if(week.locked||week.votes.length>=fmt.target){if(msg)msg.innerHTML=`<span style="color:var(--red);">Voting is closed.</span>`;return;}
+  if(week.votes.some(v=>v.name.toLowerCase()===name.toLowerCase())){if(msg)msg.innerHTML=`<span style="color:#b45309;">${escH(name)} already checked in.</span>`;return;}
+  week.votes.push({name,timestamp:new Date().toISOString()});
+  if(week.votes.length>=fmt.target){week.locked=true;const r=genTeams(week.votes);week.teams=fmt.mode==='2x7'?{red:r.red,white:r.white,subs:r.subs}:{red:r.red,white:r.white,blue:r.blue,subs:r.subs};}
+  await SAVE();renderV();
+}
+async function adminAV(weekDate){
+  const name=(document.getElementById('av-n')?.value||'').trim();if(!name)return;
+  if(!ST.weeks[weekDate])ST.weeks[weekDate]={date:weekDate,votes:[],locked:false,teams:null};
+  const week=ST.weeks[weekDate],fmt=getFmt();
+  if(week.votes.some(v=>v.name.toLowerCase()===name.toLowerCase())){alert(`${name} already checked in.`);return;}
+  week.votes.push({name,timestamp:new Date().toISOString()});
+  if(week.votes.length>=fmt.target&&!week.locked){week.locked=true;const r=genTeams(week.votes);week.teams=fmt.mode==='2x7'?{red:r.red,white:r.white,subs:r.subs}:{red:r.red,white:r.white,blue:r.blue,subs:r.subs};}
+  await SAVE();renderV();
+}
+async function rmV(weekDate,idx){const week=ST.weeks[weekDate];if(!week)return;week.votes.splice(idx,1);await SAVE();renderV();}
+async function toggleLock(weekDate){if(!ST.weeks[weekDate])ST.weeks[weekDate]={date:weekDate,votes:[],locked:false,teams:null};ST.weeks[weekDate].locked=!ST.weeks[weekDate].locked;await SAVE();renderV();}
+async function doGenT(weekDate){
+  const week=ST.weeks[weekDate];if(!week)return;
+  const fmt=getFmt(),r=genTeams(week.votes);
+  week.teams=fmt.mode==='2x7'?{red:r.red,white:r.white,subs:r.subs}:{red:r.red,white:r.white,blue:r.blue,subs:r.subs};
+  await SAVE();renderV();
+}
+async function saveGW(weekDate){
+  const week=ST.weeks[weekDate];if(!week)return;
+  week.gamesWon={red:parseInt(document.getElementById('gw-red')?.value||0),white:parseInt(document.getElementById('gw-white')?.value||0),blue:parseInt(document.getElementById('gw-blue')?.value||0)};
+  await SAVE();renderV();
+}
+setInterval(()=>{const el=document.getElementById('abclock');if(el)el.textContent=nowClock();},1000);
+(async function(){
+  const lc=document.getElementById('lc');if(lc){lc.style.padding='0';lc.innerHTML=`<div class="lwrap">${ballSVG(32,'white')}<div class="ltitle" style="margin-top:12px;color:rgba(255,255,255,.5);font-size:14px;font-weight:400;">Loading...</div></div>`;}
+  await LOAD();renderV();
+})();
+</script>
