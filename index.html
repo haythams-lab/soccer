@@ -564,12 +564,21 @@ function renderV(){
 /* ─── ACTIONS ─── */
 function doLogin(){
   const u=(document.getElementById('li-u')?.value||'').trim(),p=document.getElementById('li-p')?.value||'';
-  if(u===ADMIN.u&&p===ADMIN.p){showLoader('Welcome back, Admin',2100,async()=>{ST.user={role:'admin'};ST.view='aw';if(hasST())try{await window.storage.set('lues_sess',JSON.stringify({user:ST.user,view:ST.view}));}catch(e){}renderV();});return;}
-  if(u===USR.u&&p===USR.p){showLoader('Welcome, Member',2100,async()=>{ST.user={role:'user'};ST.view='uh';if(hasST())try{await window.storage.set('lues_sess',JSON.stringify({user:ST.user,view:ST.view}));}catch(e){}renderV();});return;}
+  if(u===ADMIN.u&&p===ADMIN.p){
+    ST.user={role:'admin'};ST.view='aw';renderV();
+    showLoader('Welcome back, Admin',2100,async()=>{if(hasST())try{await window.storage.set('lues_sess',JSON.stringify({user:ST.user,view:ST.view}));}catch(e){}});
+    return;
+  }
+  if(u===USR.u&&p===USR.p){
+    ST.user={role:'user'};ST.view='uh';renderV();
+    showLoader('Welcome, Member',2100,async()=>{if(hasST())try{await window.storage.set('lues_sess',JSON.stringify({user:ST.user,view:ST.view}));}catch(e){}});
+    return;
+  }
   const e=document.getElementById('li-e');if(e)e.style.display='block';
 }
 function doLogout(){
-  showLoader('Signing out...',1300,async()=>{ST.user=null;ST.view='login';ST.editId=null;ST.historyKey=null;pendingPhoto=null;if(hasST())try{await window.storage.delete('lues_sess');}catch(e){}renderV();});
+  ST.user=null;ST.view='login';ST.editId=null;ST.historyKey=null;pendingPhoto=null;renderV();
+  showLoader('Signing out...',1300,async()=>{if(hasST())try{await window.storage.delete('lues_sess');}catch(e){}});
 }
 function navTo(v){ST.view=v;ST.historyKey=null;if(hasST()&&ST.user)try{window.storage.set('lues_sess',JSON.stringify({user:ST.user,view:ST.view}));}catch(e){}renderV();}
 function viewHist(k){ST.historyKey=k;renderV();}
