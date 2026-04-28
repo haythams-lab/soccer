@@ -43,23 +43,6 @@ img{-webkit-user-drag:none;user-select:none;}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes tabPop{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-@keyframes clockPulse{0%,100%{opacity:1}50%{opacity:.55}}
-@keyframes cdDigitFlip{0%{transform:translateY(-4px);opacity:0}100%{transform:translateY(0);opacity:1}}
-
-/* ── LIVE CLOCK (header) ── */
-.hdr-clock-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:1px;margin-right:10px;}
-.hdr-clock-time{font-family:'Barlow Condensed',Impact,sans-serif;font-size:18px;font-weight:700;letter-spacing:.08em;color:#fff;line-height:1;}
-.hdr-clock-colon{animation:clockPulse 1s ease infinite;}
-.hdr-clock-sub{font-size:9px;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.14em;text-align:right;}
-
-/* ── LIVE COUNTDOWN ── */
-.cd-wrap{display:flex;align-items:center;justify-content:center;gap:6px;margin:6px 0 4px;}
-.cd-seg{display:flex;flex-direction:column;align-items:center;gap:3px;}
-.cd-val{font-family:'Barlow Condensed',Impact,sans-serif;font-size:32px;font-weight:700;letter-spacing:.04em;color:#fff;min-width:52px;text-align:center;background:rgba(255,255,255,.07);border-radius:10px;padding:6px 4px 4px;line-height:1;border:1px solid rgba(255,255,255,.1);}
-.cd-lbl{font-size:8px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.3);font-weight:500;}
-.cd-sep{font-family:'Barlow Condensed',Impact,sans-serif;font-size:28px;font-weight:700;color:rgba(255,255,255,.3);margin-bottom:14px;animation:clockPulse 1s ease infinite;}
-/* compact variant for login page */
-.cd-val.sm{font-size:22px;min-width:38px;padding:4px 3px 3px;border-radius:8px;}
 
 .lwrap{min-height:100svh;background:linear-gradient(155deg,#060e1c 0%,#0d2545 55%,#163260 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(2rem + var(--safe-t)) 1.25rem calc(3rem + var(--safe-b));animation:fIn .5s ease;}
 .lbadge{width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.06);border:2.5px solid var(--red);display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 0 0 10px rgba(217,43,43,.1),0 20px 60px rgba(0,0,0,.4);animation:badgePulse 2s ease infinite;}
@@ -77,18 +60,11 @@ img{-webkit-user-drag:none;user-select:none;}
 .lhint{font-size:12px;color:var(--t3);text-align:center;margin-top:14px;}
 .lvote-status{margin-top:22px;text-align:center;animation:slideUp .5s cubic-bezier(.32,0,.67,0) .25s both;}
 
-/* ── LOGIN clock strip ── */
-.login-clock-strip{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;padding:7px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:30px;width:fit-content;margin-left:auto;margin-right:auto;}
-.login-clock-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;flex-shrink:0;animation:clockPulse 1.4s ease infinite;}
-.login-clock-val{font-family:'Barlow Condensed',Impact,sans-serif;font-size:15px;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.75);}
-.login-clock-label{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.13em;}
-
 .ahdr{position:sticky;top:0;z-index:200;background:var(--navy);padding:calc(10px + var(--safe-t)) 16px 10px;display:flex;align-items:center;justify-content:space-between;color:#fff;box-shadow:0 2px 16px rgba(0,0,0,.3);}
 .ahdr-brand{display:flex;align-items:center;gap:10px;}
 .ahdr-ico{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .ahdr-nm{font-family:'Barlow Condensed',Impact,sans-serif;font-size:19px;font-weight:700;letter-spacing:.04em;}
 .ahdr-rl{font-size:10px;opacity:.45;margin-top:1px;letter-spacing:.05em;text-transform:uppercase;}
-.ahdr-right{display:flex;align-items:center;gap:8px;}
 .sout{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:9px 16px;border-radius:10px;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;min-height:40px;display:flex;align-items:center;transition:background .15s;}
 .sout:active{background:rgba(255,255,255,.25);}
 
@@ -199,10 +175,6 @@ input[type=number]:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(13,3
 .ns-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:12px;}
 .ns-clock{font-family:'Barlow Condensed',Impact,sans-serif;font-size:26px;font-weight:700;letter-spacing:.06em;color:rgba(255,255,255,.65);}
 
-/* upcoming session card for user view */
-.upcoming-card{background:#fff;border-radius:var(--r);padding:14px 16px;margin-bottom:9px;box-shadow:var(--sh);display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.upcoming-card.next-up{border:1.5px solid var(--blue);}
-
 .sfmt{display:flex;align-items:center;gap:10px;padding:13px 15px;background:linear-gradient(90deg,#f0f4ff,#e8f0fe);border-radius:14px;margin-bottom:12px;border:1px solid #c7d7fe;flex-wrap:wrap;}
 .sfmt-lbl{font-size:13px;font-weight:500;color:var(--navy2);flex:1;min-width:120px;}
 .fmt-pill{display:inline-flex;background:#e0e8ff;border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap;}
@@ -253,8 +225,6 @@ select.vote-sel:focus{border-color:var(--navy);}
   #lc{padding:11px;padding-bottom:calc(var(--nav-h) + 14px + var(--safe-b));}
   .card{padding:14px;}
   .ltitle{font-size:34px;}
-  .cd-val{font-size:24px;min-width:42px;}
-  .hdr-clock-time{font-size:15px;}
 }
 </style>
 </head>
@@ -316,8 +286,8 @@ let ST={
   user:null,players:[],weeks:{},view:'login',
   editId:null,historyKey:null,monthFilter:null,
   fmt:{mode:'3x5',perTeam:5,teams:3,target:15,dropinCount:8},
-  selectedDate:null,
-  schedulingNew:false
+  selectedDate:null,   // admin: which future session is expanded
+  schedulingNew:false  // admin: show schedule form
 };
 let pendingPhoto=null;
 function getFmt(){return ST.fmt||{mode:'3x5',perTeam:5,teams:3,target:15,dropinCount:8};}
@@ -357,7 +327,7 @@ function saveSession(){try{localStorage.setItem('lues_sess',JSON.stringify({user
 function clearSession(){try{localStorage.removeItem('lues_sess');}catch(e){}}
 
 // ══════════════════════════════════════════════
-//  TIME HELPERS  (all Alberta / Lacombe time)
+//  TIME HELPERS
 // ══════════════════════════════════════════════
 function getAB(){return new Date(new Date().toLocaleString('en-US',{timeZone:'America/Edmonton'}));}
 function todayKey(){const t=getAB();return`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;}
@@ -365,20 +335,15 @@ function fmtT(iso){return new Date(iso).toLocaleTimeString('en-US',{timeZone:'Am
 function fmtD(k){return new Date(k+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});}
 function nowClock(){return new Date().toLocaleTimeString('en-US',{timeZone:'America/Edmonton',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});}
 
-// Returns {h12, min, sec, ampm} parts for styled clock
-function nowClockParts(){
-  const ab=getAB();
-  const h=ab.getHours(),m=ab.getMinutes(),s=ab.getSeconds();
-  const ap=h>=12?'PM':'AM';const h12=h%12||12;
-  return{h12:String(h12).padStart(2,'0'),min:String(m).padStart(2,'0'),sec:String(s).padStart(2,'0'),ampm:ap};
-}
-
+// Convert "HH:MM" to minutes-since-midnight
 function t2m(t){if(!t)return 0;const[h,m]=t.split(':').map(Number);return h*60+m;}
+// Convert "HH:MM" to 12-hour display
 function fmtTime12(t){if(!t)return'';const[h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM';const h12=h%12||12;return`${h12}:${String(m).padStart(2,'0')} ${ap}`;}
 
 function sessionOpenMins(w){return t2m(w.openTime||'09:30');}
 function sessionCloseMins(w){return t2m(w.closeTime||'19:00');}
 
+// Is this session currently accepting votes? (not locked, today, within window)
 function isSessionOpen(w){
   if(!w||w.locked)return false;
   if(w.date!==todayKey())return false;
@@ -386,22 +351,33 @@ function isSessionOpen(w){
   return nowM>=sessionOpenMins(w)&&nowM<sessionCloseMins(w);
 }
 
+// Find info about the next upcoming/open session
 function getNextSessionInfo(){
   const todayK=todayKey();
   const ab=getAB();
   const nowM=ab.getHours()*60+ab.getMinutes();
   const nowS=ab.getSeconds();
+
   const sessions=Object.values(ST.weeks)
     .filter(w=>w.date>=todayK)
     .sort((a,b)=>a.date.localeCompare(b.date));
+
   for(const w of sessions){
     const openM=sessionOpenMins(w);
     const closeM=sessionCloseMins(w);
+
     if(w.date===todayK){
+      // Currently open?
       if(!w.locked&&nowM>=openM&&nowM<closeM)return{session:w,isOpen:true,ms:0};
-      if(nowM<openM){const ms=Math.max(0,(openM-nowM)*60000-nowS*1000);return{session:w,isOpen:false,ms};}
+      // Opens later today?
+      if(nowM<openM){
+        const ms=Math.max(0,(openM-nowM)*60000-nowS*1000);
+        return{session:w,isOpen:false,ms};
+      }
+      // Past this session, try next
       continue;
     } else {
+      // Future date — calculate ms until open
       const[ty,tm,td]=todayK.split('-').map(Number);
       const[wy,wm,wd]=w.date.split('-').map(Number);
       const daysDiff=Math.round((new Date(wy,wm-1,wd)-new Date(ty,tm-1,td))/86400000);
@@ -414,35 +390,11 @@ function getNextSessionInfo(){
   return null;
 }
 
-// Returns structured countdown segments for pretty display
-function cdParts(ms){
-  if(ms===0)return null;
-  const tot=Math.floor(ms/1000);
-  const d=Math.floor(tot/86400),h=Math.floor((tot%86400)/3600),m=Math.floor((tot%3600)/60),s=tot%60;
-  return{d,h:String(h).padStart(2,'0'),m:String(m).padStart(2,'0'),s:String(s).padStart(2,'0'),hasDays:d>0};
-}
-
 function fmtCountdown(ms){
   if(ms===0)return'OPEN NOW';
-  const p=cdParts(ms);if(!p)return'--';
-  return p.hasDays?`${p.d}d ${p.h}:${p.m}:${p.s}`:`${p.h}:${p.m}:${p.s}`;
-}
-
-// Renders a pretty segmented countdown HTML  (sm=true → smaller)
-function cdHTML(ms,sm){
-  if(ms===0)return`<div style="font-family:'Barlow Condensed',Impact,sans-serif;font-size:${sm?20:26}px;font-weight:700;color:#4ade80;letter-spacing:.04em;">⚽ OPEN NOW</div>`;
-  const p=cdParts(ms);if(!p)return'';
-  const cls='cd-val'+(sm?' sm':'');
-  let segs='';
-  if(p.hasDays){
-    segs+=`<div class="cd-seg"><div class="${cls}" id="cd-d">${p.d}</div><div class="cd-lbl">Days</div></div><div class="cd-sep">:</div>`;
-  }
-  segs+=`<div class="cd-seg"><div class="${cls}" id="cd-h">${p.h}</div><div class="cd-lbl">Hrs</div></div>
-    <div class="cd-sep">:</div>
-    <div class="cd-seg"><div class="${cls}" id="cd-m">${p.m}</div><div class="cd-lbl">Min</div></div>
-    <div class="cd-sep">:</div>
-    <div class="cd-seg"><div class="${cls}" id="cd-s">${p.s}</div><div class="cd-lbl">Sec</div></div>`;
-  return`<div class="cd-wrap">${segs}</div>`;
+  const tot=Math.floor(ms/1000);
+  const d=Math.floor(tot/86400),h=Math.floor((tot%86400)/3600),m=Math.floor((tot%3600)/60),s=tot%60;
+  return d>0?`${d}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
 // ══════════════════════════════════════════════
@@ -480,12 +432,9 @@ function playerStats(name){
 
 function fmtLabel(f){
   if(!f)return'3 teams of 5';
-  return{
-    '2x4':'2 teams of 4',
-    '2x5':'2 teams of 5',
-    '2x6':'2 teams of 6',
-    '2x7':'2 teams of 7',
-    '2x8':'2 teams of 8',
+  return{'2x5':'2 teams of 5','2x8':'2 teams of 8',
+    '2x11':'2 teams of 11',
+    '2x12':'2 teams of 12',
     '3x5':'3 teams of 5',
     'dropin':`Drop-in (${f.target} players)`
   }[f.mode]||'3 teams of 5';
@@ -583,11 +532,10 @@ function fmtBanner(ed){
   return`<div class="sfmt" style="flex-wrap:wrap;row-gap:10px;">
     <span class="sfmt-lbl" style="width:100%;margin-bottom:2px;">Team format:</span>
     <div class="fmt-pill">
-      <button class="fmt-opt${f.mode==='2x4'?' on':''}" onclick="setFmt('2x4')">2×4</button>
       <button class="fmt-opt${f.mode==='2x5'?' on':''}" onclick="setFmt('2x5')">2×5</button>
-      <button class="fmt-opt${f.mode==='2x6'?' on':''}" onclick="setFmt('2x6')">2×6</button>
-      <button class="fmt-opt${f.mode==='2x7'?' on':''}" onclick="setFmt('2x7')">2×7</button>
       <button class="fmt-opt${f.mode==='2x8'?' on':''}" onclick="setFmt('2x8')">2×8</button>
+      <button class="fmt-opt${f.mode==='2x11'?' on':''}" onclick="setFmt('2x11')">2×11</button>
+      <button class="fmt-opt${f.mode==='2x12'?' on':''}" onclick="setFmt('2x12')">2×12</button>
       <button class="fmt-opt${f.mode==='3x5'?' on':''}" onclick="setFmt('3x5')">3×5</button>
       <button class="fmt-opt${f.mode==='dropin'?' on':''}" onclick="setFmt('dropin')">Drop-in</button>
     </div>
@@ -601,14 +549,10 @@ function fmtBanner(ed){
       :`<span style="font-size:11px;color:var(--t2);">${f.target} players needed</span>`}
   </div>`;
 }
-
 async function setFmt(mode){
-  const formats={
-    '2x4':{mode:'2x4',perTeam:4,teams:2,target:8},
-    '2x5':{mode:'2x5',perTeam:5,teams:2,target:10},
-    '2x6':{mode:'2x6',perTeam:6,teams:2,target:12},
-    '2x7':{mode:'2x7',perTeam:7,teams:2,target:14},
-    '2x8':{mode:'2x8',perTeam:8,teams:2,target:16},
+  const formats={'2x5':{mode:'2x5',perTeam:5,teams:2,target:10},'2x8':{mode:'2x8',perTeam:8,teams:2,target:16},
+    '2x11':{mode:'2x11',perTeam:11,teams:2,target:22},
+    '2x12':{mode:'2x12',perTeam:12,teams:2,target:24},
     '3x5':{mode:'3x5',perTeam:5,teams:3,target:15},
     'dropin':{mode:'dropin',perTeam:ST.fmt.dropinCount||8,teams:1,target:ST.fmt.dropinCount||8}
   };
@@ -625,19 +569,14 @@ async function applyDropinCount(){await SAVE();renderV();}
 function V_login(){
   const info=getNextSessionInfo();
   const isOpen=info&&info.isOpen;
-  const cp=nowClockParts();
-
   let statusHtml='';
   if(!info){
     statusHtml=`<div style="font-size:14px;color:rgba(255,255,255,.45);">No upcoming sessions scheduled</div><div style="font-size:10px;color:rgba(255,255,255,.22);margin-top:6px;">Admin schedules sessions in the app</div>`;
   } else if(isOpen){
     statusHtml=`<div style="font-family:'Barlow Condensed',Impact,sans-serif;font-size:24px;font-weight:700;letter-spacing:.06em;color:#4ade80;">⚽ Voting is open today!</div><div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:5px;">Sign in to check in · Closes ${fmtTime12(info.session.closeTime||'19:00')} Alberta time</div>`;
   } else {
-    statusHtml=`<div style="font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;">Next session opens in</div>
-      <div id="login-cd-wrap">${cdHTML(info.ms,true)}</div>
-      <div style="font-size:10px;color:rgba(255,255,255,.22);margin-top:8px;">${fmtD(info.session.date)} · ${fmtTime12(info.session.openTime||'09:30')} – ${fmtTime12(info.session.closeTime||'19:00')} · Alberta time</div>`;
+    statusHtml=`<div style="font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;">Next session opens in</div><div id="vote-countdown" style="font-family:'Barlow Condensed',Impact,sans-serif;font-size:28px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.8);">${fmtCountdown(info.ms)}</div><div style="font-size:10px;color:rgba(255,255,255,.22);margin-top:4px;">${fmtD(info.session.date)} · ${fmtTime12(info.session.openTime||'09:30')} – ${fmtTime12(info.session.closeTime||'19:00')} · Alberta time</div>`;
   }
-
   return`<div class="lwrap">
     <div class="lbadge">${ballSVG(36,'white')}</div>
     <div class="ltitle">LUES Soccer Club</div>
@@ -650,14 +589,7 @@ function V_login(){
       <button class="lbtn" onclick="doLogin()">Sign in</button>
       <div class="lhint">Admin or member login</div>
     </div>
-    <div class="lvote-status">
-      <div class="login-clock-strip" style="margin-bottom:14px;">
-        <div class="login-clock-dot"></div>
-        <div class="login-clock-val" id="login-live-clock">${cp.h12}<span class="hdr-clock-colon">:</span>${cp.min}<span class="hdr-clock-colon">:</span>${cp.sec} ${cp.ampm}</div>
-        <div class="login-clock-label">Lacombe, AB</div>
-      </div>
-      ${statusHtml}
-    </div>
+    <div class="lvote-status">${statusHtml}</div>
   </div>`;
 }
 
@@ -715,16 +647,18 @@ function V_ap(){
     +form+list;
 }
 
-// ── ADMIN: THIS WEEK ──
+// ── ADMIN: THIS WEEK (any day, any scheduled session) ──
 function V_aw(){
   const banner=fmtBanner(true);
   const todayK=todayKey();
   const todayWeek=ST.weeks[todayK];
 
+  // Future scheduled sessions (dates strictly after today)
   const futureSessions=Object.values(ST.weeks)
     .filter(w=>w.date>todayK)
     .sort((a,b)=>a.date.localeCompare(b.date));
 
+  // ── Today ──
   let todaySection='';
   if(todayWeek){
     todaySection=`<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--t2);margin-bottom:10px;">Today</div>`
@@ -741,6 +675,7 @@ function V_aw(){
     </div>`;
   }
 
+  // ── Schedule button & form ──
   const schedBtn=`<div style="display:flex;justify-content:flex-end;margin-bottom:12px;">
     <button class="btn${ST.schedulingNew?' btn-d':' btn-p'} bsm" onclick="ST.schedulingNew=!ST.schedulingNew;renderV()">
       ${ST.schedulingNew?'✕ Cancel':'+ Schedule Session'}
@@ -767,6 +702,7 @@ function V_aw(){
     </div>`;
   }
 
+  // ── Upcoming sessions list ──
   let upcomingHTML='';
   if(futureSessions.length>0){
     upcomingHTML=`<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--t2);margin:4px 0 10px;">Upcoming Sessions</div>`;
@@ -805,16 +741,7 @@ function V_ah(){
     return`<button class="btn bsm" onclick="goBack()" style="margin-bottom:14px;">← Back</button><div class="wdate" style="margin-bottom:12px;">${fmtD(w.date)}</div>${weekHTML(w,true)}`;}
   const keys=Object.keys(ST.weeks).sort((a,b)=>b.localeCompare(a));
   if(!keys.length)return`<div class="empty-s">${ballSVG(42,'#9ca3af')}<div style="margin-top:14px;">No history yet.</div></div>`;
-  return`<div class="sec-title" style="margin-bottom:14px;">Session History</div>`+keys.map(k=>{const w=ST.weeks[k];return`<div class="hrow" onclick="viewHist('${k}')">
-    <div style="flex:1;min-width:0;">
-      <div style="font-size:14px;font-weight:500;">${fmtD(k)}</div>
-      <div style="font-size:12px;color:var(--t2);margin-top:3px;">${fmtTime12(w.openTime||'09:30')} – ${fmtTime12(w.closeTime||'19:00')} · ${w.votes?w.votes.length:0} players · ${w.teams?'Teams generated':'No teams'} · ${w.gamesWon?'<span style="color:#16a34a;font-weight:500;">Results saved</span>':'No results'}</div>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-      <button class="btn btn-d bsm" onclick="event.stopPropagation();deleteSession('${k}')" style="padding:5px 10px!important;min-height:34px!important;font-size:12px!important;">✕</button>
-      <span style="font-size:20px;color:var(--t3);">›</span>
-    </div>
-  </div>`;}).join('');
+  return`<div class="sec-title" style="margin-bottom:14px;">Session History</div>`+keys.map(k=>{const w=ST.weeks[k];return`<div class="hrow" onclick="viewHist('${k}')"><div><div style="font-size:14px;font-weight:500;">${fmtD(k)}</div><div style="font-size:12px;color:var(--t2);margin-top:3px;">${fmtTime12(w.openTime||'09:30')} – ${fmtTime12(w.closeTime||'19:00')} · ${w.votes?w.votes.length:0} players · ${w.teams?'Teams generated':'No teams'} · ${w.gamesWon?'<span style="color:#16a34a;font-weight:500;">Results saved</span>':'No results'}</div></div><span style="font-size:20px;color:var(--t3);">›</span></div>`;}).join('');
 }
 
 // ── ADMIN: DASHBOARD ──
@@ -845,101 +772,46 @@ function mWinners(prefix){
   return Object.entries(wins).map(([name,wins])=>({name,wins})).sort((a,b)=>b.wins-a.wins);
 }
 
-// ══════════════════════════════════════════════
-//  USER: VOTE
-// ══════════════════════════════════════════════
+// ── USER: VOTE ──
 function V_uh(){
-  const todayK=todayKey();
+  const key=todayKey();
+  const week=ST.weeks[key];
+
+  if(!week)return noSess('No Session Today','No session has been scheduled for today. Check back later!');
+
   const ab=getAB();
   const nowM=ab.getHours()*60+ab.getMinutes();
-  const fmt=getFmt();
+  const openM=sessionOpenMins(week);
+  const closeM=sessionCloseMins(week);
 
-  const todayWeek=ST.weeks[todayK];
-  let activeSession=null;
-  if(todayWeek){
-    const openM=sessionOpenMins(todayWeek);
-    const closeM=sessionCloseMins(todayWeek);
-    const withinWindow=nowM>=openM&&nowM<closeM;
-    if(withinWindow||todayWeek.locked)activeSession=todayWeek;
-  }
+  if(!week.locked&&nowM<openM)return noSess('Opens Soon',`Voting opens at ${fmtTime12(week.openTime||'09:30')} Alberta time today.`);
+  if(!week.locked&&nowM>=closeM)return noSess('Voting Closed',`Check-in closed at ${fmtTime12(week.closeTime||'19:00')}. See you next time!`);
 
-  const futureSessions=Object.values(ST.weeks)
-    .filter(w=>w.date>todayK)
-    .sort((a,b)=>a.date.localeCompare(b.date));
-
-  const info=getNextSessionInfo();
-  let html='';
-
-  if(activeSession){
-    const isLocked=activeSession.locked;
-    const vCount=(activeSession.votes||[]).length;
-    const isOpenForVoting=!isLocked&&nowM>=sessionOpenMins(activeSession)&&nowM<sessionCloseMins(activeSession)&&vCount<fmt.target;
-    const checkedIn=(activeSession.votes||[]).map(v=>v.name.toLowerCase());
-    const available=ST.players.filter(p=>!checkedIn.includes(p.name.toLowerCase()));
-    const modeLbl={'2x4':'2 teams of 4','2x5':'2 teams of 5','2x6':'2 teams of 6','2x7':'2 teams of 7','2x8':'2 teams of 8','3x5':'3 teams of 5','dropin':`Drop-in (${fmt.target})`}[fmt.mode]||'Teams';
-
-    if(isOpenForVoting){
-      html+=`<div class="cta-card">
-        <div class="cta-title">⚽ Check in for today</div>
-        <div class="cta-sub">Format: ${modeLbl} · Locks at ${fmt.target} players · Closes ${fmtTime12(activeSession.closeTime||'19:00')}</div>
-        <div class="adv-row" style="margin-bottom:6px;">
-          <select id="uv-sel" class="vote-sel" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;">
-            <option value="" style="color:var(--text);background:#fff;">— Select your name —</option>
-            ${available.map(p=>{const ctry=p.nationality?COUNTRIES.find(c=>c.n===p.nationality):null;return`<option value="${escH(p.name)}" style="color:var(--text);background:#fff;">${ctry?ctry.f+' ':''} ${escH(p.name)}</option>`;}).join('')}
-            ${available.length===0?`<option disabled style="color:var(--text);background:#fff;">All roster members checked in</option>`:''}
-          </select>
-          <button class="btn btn-p bsm" onclick="userVote()" style="background:var(--red)!important;border-color:var(--red)!important;white-space:nowrap;min-width:90px;">Check in</button>
-        </div>
-        <div id="uv-m" style="font-size:12px;min-height:16px;color:rgba(255,255,255,.7);"></div>
-      </div>`;
-    } else {
-      html+=`<div class="sec" style="text-align:center;padding:12px;margin-bottom:12px;">
-        <span class="badge bd" style="font-size:13px;">${isLocked?`⚽ Voting closed — ${vCount}/${fmt.target} registered`:`Check-in closed for today`}</span>
-      </div>`;
-    }
-    html+=weekHTML(activeSession,false);
-
-  } else {
-    if(!todayWeek){
-      html+=noSess('No Session Today','No session is scheduled for today. Check the upcoming schedule below!');
-    } else {
-      const openM=sessionOpenMins(todayWeek);
-      const closeM=sessionCloseMins(todayWeek);
-      if(nowM<openM){
-        html+=noSess('Opens Soon',`Voting opens at ${fmtTime12(todayWeek.openTime||'09:30')} Alberta time today.`);
-      } else {
-        html+=noSess('Voting Closed',`Check-in closed at ${fmtTime12(todayWeek.closeTime||'19:00')}. See you next time!`);
-      }
-    }
-  }
-
-  if(futureSessions.length>0){
-    html+=`<div style="display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px;">
-      <div class="sec-title">Upcoming Sessions</div>
-      ${info&&!info.isOpen&&futureSessions.some(w=>w.date===info.session.date)
-        ?`<div style="font-size:11px;color:var(--t2);">Next opens in <span id="user-cd" style="font-family:'Barlow Condensed',Impact,sans-serif;font-size:13px;font-weight:700;color:var(--navy);">${fmtCountdown(info.ms)}</span></div>`
-        :''}
+  const fmt=getFmt();const isLocked=week.locked,vCount=week.votes?week.votes.length:0;
+  const checkedIn=(week.votes||[]).map(v=>v.name.toLowerCase());
+  const available=ST.players.filter(p=>!checkedIn.includes(p.name.toLowerCase()));
+  const modeLbl={'2x5':'2 teams of 5','2x8':'2 teams of 8',
+    '2x11':'2 teams of 11',
+    '2x12':'2 teams of 12','3x5':'3 teams of 5','dropin':`Drop-in (${fmt.target})`}[fmt.mode]||'Teams';
+  let vform='';
+  if(!isLocked&&vCount<fmt.target){
+    vform=`<div class="cta-card">
+      <div class="cta-title">⚽ Check in for today</div>
+      <div class="cta-sub">Format: ${modeLbl} · Locks at ${fmt.target} players · Closes ${fmtTime12(week.closeTime||'19:00')}</div>
+      <div class="adv-row" style="margin-bottom:6px;">
+        <select id="uv-sel" class="vote-sel" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;">
+          <option value="" style="color:var(--text);background:#fff;">— Select your name —</option>
+          ${available.map(p=>{const ctry=p.nationality?COUNTRIES.find(c=>c.n===p.nationality):null;return`<option value="${escH(p.name)}" style="color:var(--text);background:#fff;">${ctry?ctry.f+' ':''} ${escH(p.name)}</option>`;}).join('')}
+          ${available.length===0?`<option disabled style="color:var(--text);background:#fff;">All roster members checked in</option>`:''}
+        </select>
+        <button class="btn btn-p bsm" onclick="userVote()" style="background:var(--red)!important;border-color:var(--red)!important;white-space:nowrap;min-width:90px;">Check in</button>
+      </div>
+      <div id="uv-m" style="font-size:12px;min-height:16px;color:rgba(255,255,255,.7);"></div>
     </div>`;
-    futureSessions.forEach(w=>{
-      const isNext=info&&info.session.date===w.date;
-      html+=`<div class="upcoming-card${isNext?' next-up':''}">
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:14px;font-weight:500;margin-bottom:4px;">${fmtD(w.date)}</div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span style="font-size:12px;color:var(--t2);">⏰ ${fmtTime12(w.openTime||'09:30')} – ${fmtTime12(w.closeTime||'19:00')}</span>
-            <span style="font-size:11px;color:var(--t3);">· Alberta time</span>
-          </div>
-          ${isNext?`<div style="margin-top:6px;font-size:11px;color:var(--blue);font-weight:600;">⚡ Next up · Quota closes early if ${fmt.target} players check in</div>`:''}
-        </div>
-        <div style="text-align:right;flex-shrink:0;">
-          <div style="font-family:'Barlow Condensed',Impact,sans-serif;font-size:15px;font-weight:700;color:var(--navy2);">${(w.votes||[]).length}/${fmt.target}</div>
-          <div style="font-size:10px;color:var(--t3);">checked in</div>
-        </div>
-      </div>`;
-    });
+  }else{
+    vform=`<div class="sec" style="text-align:center;padding:12px;margin-bottom:12px;"><span class="badge bd" style="font-size:13px;">Voting closed — ${vCount}/${fmt.target} registered</span></div>`;
   }
-
-  return html;
+  return vform+weekHTML(week,false);
 }
 
 // ── USER: HISTORY ──
@@ -961,22 +833,23 @@ function noSess(title,sub){
   } else if(info.isOpen){
     cdHtml=`<div style="font-family:'Barlow Condensed',Impact,sans-serif;font-size:24px;font-weight:700;color:#4ade80;">⚽ VOTING IS OPEN NOW</div><div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:5px;">Closes ${fmtTime12(info.session.closeTime||'19:00')} Alberta time</div>`;
   } else {
-    cdHtml=`<div style="font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;text-align:center;">Next session opens in</div>
-      <div id="nosess-cd-wrap">${cdHTML(info.ms,false)}</div>
-      <div style="font-size:10px;color:rgba(255,255,255,.28);text-align:center;margin-top:8px;">${fmtD(info.session.date)} · ${fmtTime12(info.session.openTime||'09:30')} – ${fmtTime12(info.session.closeTime||'19:00')} · Alberta time</div>`;
+    cdHtml=`<div style="font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;text-align:center;">Next session opens in</div>
+      <div id="vote-countdown" style="font-family:'Barlow Condensed',Impact,sans-serif;font-size:32px;font-weight:700;letter-spacing:.08em;color:#fff;text-align:center;">${fmtCountdown(info.ms)}</div>
+      <div style="font-size:10px;color:rgba(255,255,255,.28);text-align:center;margin-top:5px;">${fmtD(info.session.date)} · ${fmtTime12(info.session.openTime||'09:30')} – ${fmtTime12(info.session.closeTime||'19:00')} · Alberta time</div>`;
   }
   const postGameSection=(todayWeek&&ST.user&&ST.user.role==='admin'&&!isSessionOpen(todayWeek))
     ?`<div style="width:100%;margin-top:18px;">${fmtBanner(false)}${weekHTML(todayWeek,true)}</div>`:'';
   return`<div class="nosession"><div class="ns-ico">${ballSVG(26,'rgba(255,255,255,.7)')}</div><div class="ns-title">${title}</div><div class="ns-sub">${sub}</div><div class="ns-clock" id="abclock">--:-- --</div><div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);width:100%;text-align:center;">${cdHtml}</div></div>${postGameSection}`;
 }
 
-// ── WEEK HTML ──
+// ── WEEK HTML (shared admin+user) ──
 function weekHTML(week,isAdmin){
   if(!week)return'';
   const fmt=getFmt();const votes=week.votes||[],isLocked=week.locked,vCount=votes.length,hasTeams=!!week.teams;
   const pct=Math.min(100,Math.round(vCount/fmt.target*100));const quotaReached=vCount>=fmt.target||isLocked;
   const checkedIn=(week.votes||[]).map(v=>v.name.toLowerCase());
 
+  // ── Editable voting window for admin ──
   const timeRow=isAdmin?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;padding:10px 12px;background:#f4f7fb;border-radius:11px;">
     <span style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.07em;flex-shrink:0;">Voting window:</span>
     <input type="time" id="wt-open-${week.date}" value="${week.openTime||'09:30'}" class="ti" style="flex:1;min-width:80px;">
@@ -1086,20 +959,13 @@ function renderV(){
     lc.innerHTML=V_login();return;
   }
   const isAdmin=ST.user.role==='admin';
-  const cp=nowClockParts();
   lh.style.display='block';
   lh.innerHTML=`<div class="ahdr">
     <div class="ahdr-brand">
       <div class="ahdr-ico">${ballSVG(18,'rgba(255,255,255,.88)')}</div>
       <div><div class="ahdr-nm">LUES Soccer Club</div><div class="ahdr-rl">${isAdmin?'Administrator':'Member'}</div></div>
     </div>
-    <div class="ahdr-right">
-      <div class="hdr-clock-wrap">
-        <div class="hdr-clock-time" id="hdr-clock">${cp.h12}<span class="hdr-clock-colon">:</span>${cp.min}<span class="hdr-clock-colon">:</span>${cp.sec} ${cp.ampm}</div>
-        <div class="hdr-clock-sub">Lacombe, AB</div>
-      </div>
-      <button class="sout" onclick="doLogout()">Sign out</button>
-    </div>
+    <button class="sout" onclick="doLogout()">Sign out</button>
   </div>`;
 
   const navItems=isAdmin
@@ -1146,19 +1012,21 @@ async function savePl(editId){
 }
 async function delPl(id){if(!confirm('Delete this player?'))return;ST.players=ST.players.filter(p=>p.id!==id);try{await db.ref('lues/photos/'+id).remove();}catch(e){}ST.editId=null;await SAVE();renderV();}
 
+// ── Create today's session ──
 async function createTodaySession(){
   const key=todayKey();
   if(!ST.weeks[key])ST.weeks[key]={date:key,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00'};
   await SAVE();renderV();
 }
 
+// ── Schedule a future session ──
 async function scheduleSession(){
   const date=document.getElementById('sched-date')?.value;
   if(!date){alert('Please select a date.');return;}
   if(ST.weeks[date]){
     alert('A session already exists for this date.');
     ST.schedulingNew=false;
-    if(date!==todayKey())ST.selectedDate=date;
+    if(date===todayKey()){}else{ST.selectedDate=date;}
     renderV();return;
   }
   const openTime=document.getElementById('sched-open')?.value||'09:30';
@@ -1169,14 +1037,15 @@ async function scheduleSession(){
   await SAVE();renderV();
 }
 
+// ── Delete a future session ──
 async function deleteSession(weekDate){
   if(!confirm(`Delete the session on ${fmtD(weekDate)}?`))return;
   delete ST.weeks[weekDate];
   if(ST.selectedDate===weekDate)ST.selectedDate=null;
-  if(ST.historyKey===weekDate)ST.historyKey=null;
   await SAVE();renderV();
 }
 
+// ── Update session open/close times ──
 async function updateSessionTimes(weekDate){
   const week=ST.weeks[weekDate];if(!week)return;
   const openEl=document.getElementById('wt-open-'+weekDate);
@@ -1187,6 +1056,7 @@ async function updateSessionTimes(weekDate){
   await SAVE();renderV();
 }
 
+// ── Voting ──
 async function userVote(){
   const name=(document.getElementById('uv-sel')?.value||'').trim();
   const msg=document.getElementById('uv-m');
@@ -1225,58 +1095,20 @@ async function saveGW(weekDate){
 //  CLOCK & AUTO-REFRESH TICKER
 // ══════════════════════════════════════════════
 let _renderPending=false;
-let _lastSec=-1;
-
 setInterval(()=>{
-  const cp=nowClockParts();
-  const timeStr=`${cp.h12}<span class="hdr-clock-colon">:</span>${cp.min}<span class="hdr-clock-colon">:</span>${cp.sec} ${cp.ampm}`;
+  // Update clock
+  const el=document.getElementById('abclock');if(el)el.textContent=nowClock();
 
-  // ── Header clock (logged-in) ──
-  const hdrEl=document.getElementById('hdr-clock');
-  if(hdrEl)hdrEl.innerHTML=timeStr;
-
-  // ── Login page live clock ──
-  const loginClockEl=document.getElementById('login-live-clock');
-  if(loginClockEl)loginClockEl.innerHTML=timeStr;
-
-  // ── No-session card clock ──
-  const clockEl=document.getElementById('abclock');
-  if(clockEl)clockEl.textContent=nowClock();
-
+  // Update countdown display
   const info=getNextSessionInfo();
-
-  // ── Login page segmented countdown ──
-  const loginCdWrap=document.getElementById('login-cd-wrap');
-  if(info&&!info.isOpen&&loginCdWrap){
-    const p=cdParts(info.ms);
-    if(p){
-      const dEl=loginCdWrap.querySelector('#cd-d');if(dEl)dEl.textContent=p.d;
-      const hEl=loginCdWrap.querySelector('#cd-h');if(hEl)hEl.textContent=p.h;
-      const mEl=loginCdWrap.querySelector('#cd-m');if(mEl)mEl.textContent=p.m;
-      const sEl=loginCdWrap.querySelector('#cd-s');if(sEl)sEl.textContent=p.s;
+  const cd=document.getElementById('vote-countdown');
+  if(info&&!info.isOpen&&cd){
+    cd.textContent=fmtCountdown(info.ms);
+    // Auto-refresh page when the next session is about to open
+    if(info.ms<=1500&&!_renderPending){
+      _renderPending=true;
+      setTimeout(()=>{_renderPending=false;renderV();},info.ms+200);
     }
-  }
-
-  // ── No-session card segmented countdown ──
-  const nosessCdWrap=document.getElementById('nosess-cd-wrap');
-  if(info&&!info.isOpen&&nosessCdWrap){
-    const p=cdParts(info.ms);
-    if(p){
-      const dEl=nosessCdWrap.querySelector('#cd-d');if(dEl)dEl.textContent=p.d;
-      const hEl=nosessCdWrap.querySelector('#cd-h');if(hEl)hEl.textContent=p.h;
-      const mEl=nosessCdWrap.querySelector('#cd-m');if(mEl)mEl.textContent=p.m;
-      const sEl=nosessCdWrap.querySelector('#cd-s');if(sEl)sEl.textContent=p.s;
-    }
-  }
-
-  // ── Inline user-cd text (upcoming list) ──
-  const userCdEl=document.getElementById('user-cd');
-  if(info&&!info.isOpen&&userCdEl)userCdEl.textContent=fmtCountdown(info.ms);
-
-  // ── Auto-trigger render when session opens ──
-  if(info&&!info.isOpen&&info.ms<=1500&&!_renderPending){
-    _renderPending=true;
-    setTimeout(()=>{_renderPending=false;renderV();},info.ms+200);
   }
 },1000);
 
