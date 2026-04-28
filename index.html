@@ -354,14 +354,12 @@ function isSessionOpen(w){
 }
 
 // ── getNextSessionInfo: always returns the CLOSEST upcoming/open session ──
-// Skips past sessions and locked sessions (quota hit), cycles to the next date.
 function getNextSessionInfo(){
   const todayK=todayKey();
   const ab=getAB();
   const nowM=ab.getHours()*60+ab.getMinutes();
   const nowS=ab.getSeconds();
 
-  // Sort ALL sessions by date ascending
   const sessions=Object.values(ST.weeks)
     .filter(w=>w.date>=todayK)
     .sort((a,b)=>a.date.localeCompare(b.date));
@@ -371,17 +369,13 @@ function getNextSessionInfo(){
     const closeM=sessionCloseMins(w);
 
     if(w.date===todayK){
-      // Currently open (and not locked by quota)?
       if(!w.locked&&nowM>=openM&&nowM<closeM)return{session:w,isOpen:true,ms:0};
-      // Opens later today?
       if(nowM<openM){
         const ms=Math.max(0,(openM-nowM)*60000-nowS*1000);
         return{session:w,isOpen:false,ms};
       }
-      // Today's session is past close time OR quota-locked — skip to next date
       continue;
     } else {
-      // Future date: calculate ms until that session opens
       const[ty,tm,td]=todayK.split('-').map(Number);
       const[wy,wm,wd]=w.date.split('-').map(Number);
       const daysDiff=Math.round((new Date(wy,wm-1,wd)-new Date(ty,tm-1,td))/86400000);
@@ -434,9 +428,18 @@ function playerStats(name){
   return{won,played};
 }
 
+// ── CHANGED: added 2x4, 2x6, 2x7 ──
 function fmtLabel(f){
   if(!f)return'3 teams of 5';
-  return{'2x5':'2 teams of 5','2x8':'2 teams of 8','3x5':'3 teams of 5','dropin':`Drop-in (${f.target} players)`}[f.mode]||'3 teams of 5';
+  return{
+    '2x4':'2 teams of 4',
+    '2x5':'2 teams of 5',
+    '2x6':'2 teams of 6',
+    '2x7':'2 teams of 7',
+    '2x8':'2 teams of 8',
+    '3x5':'3 teams of 5',
+    'dropin':`Drop-in (${f.target} players)`
+  }[f.mode]||'3 teams of 5';
 }
 
 // ══════════════════════════════════════════════
@@ -523,6 +526,7 @@ function buildTeamsObj(r,fmt){
 
 // ══════════════════════════════════════════════
 //  FORMAT BANNER
+//  CHANGED: added 2x4, 2x6, 2x7 options
 // ══════════════════════════════════════════════
 function fmtBanner(ed){
   const f=getFmt();
@@ -531,7 +535,10 @@ function fmtBanner(ed){
   return`<div class="sfmt" style="flex-wrap:wrap;row-gap:10px;">
     <span class="sfmt-lbl" style="width:100%;margin-bottom:2px;">Team format:</span>
     <div class="fmt-pill">
+      <button class="fmt-opt${f.mode==='2x4'?' on':''}" onclick="setFmt('2x4')">2×4</button>
       <button class="fmt-opt${f.mode==='2x5'?' on':''}" onclick="setFmt('2x5')">2×5</button>
+      <button class="fmt-opt${f.mode==='2x6'?' on':''}" onclick="setFmt('2x6')">2×6</button>
+      <button class="fmt-opt${f.mode==='2x7'?' on':''}" onclick="setFmt('2x7')">2×7</button>
       <button class="fmt-opt${f.mode==='2x8'?' on':''}" onclick="setFmt('2x8')">2×8</button>
       <button class="fmt-opt${f.mode==='3x5'?' on':''}" onclick="setFmt('3x5')">3×5</button>
       <button class="fmt-opt${f.mode==='dropin'?' on':''}" onclick="setFmt('dropin')">Drop-in</button>
@@ -546,8 +553,18 @@ function fmtBanner(ed){
       :`<span style="font-size:11px;color:var(--t2);">${f.target} players needed</span>`}
   </div>`;
 }
+
+// ── CHANGED: added 2x4, 2x6, 2x7 ──
 async function setFmt(mode){
-  const formats={'2x5':{mode:'2x5',perTeam:5,teams:2,target:10},'2x8':{mode:'2x8',perTeam:8,teams:2,target:16},'3x5':{mode:'3x5',perTeam:5,teams:3,target:15},'dropin':{mode:'dropin',perTeam:ST.fmt.dropinCount||8,teams:1,target:ST.fmt.dropinCount||8}};
+  const formats={
+    '2x4':{mode:'2x4',perTeam:4,teams:2,target:8},
+    '2x5':{mode:'2x5',perTeam:5,teams:2,target:10},
+    '2x6':{mode:'2x6',perTeam:6,teams:2,target:12},
+    '2x7':{mode:'2x7',perTeam:7,teams:2,target:14},
+    '2x8':{mode:'2x8',perTeam:8,teams:2,target:16},
+    '3x5':{mode:'3x5',perTeam:5,teams:3,target:15},
+    'dropin':{mode:'dropin',perTeam:ST.fmt.dropinCount||8,teams:1,target:ST.fmt.dropinCount||8}
+  };
   const base=formats[mode]||formats['3x5'];
   ST.fmt={...base,dropinCount:ST.fmt.dropinCount||8};
   await SAVE();renderV();
@@ -723,13 +740,23 @@ function V_aw(){
   return banner+todaySection+schedBtn+schedForm+upcomingHTML;
 }
 
-// ── ADMIN: HISTORY ──
+// ── ADMIN: HISTORY
+// CHANGED: added delete button to each history row ──
 function V_ah(){
   if(ST.historyKey){const w=ST.weeks[ST.historyKey];if(!w){ST.historyKey=null;return V_ah();}
     return`<button class="btn bsm" onclick="goBack()" style="margin-bottom:14px;">← Back</button><div class="wdate" style="margin-bottom:12px;">${fmtD(w.date)}</div>${weekHTML(w,true)}`;}
   const keys=Object.keys(ST.weeks).sort((a,b)=>b.localeCompare(a));
   if(!keys.length)return`<div class="empty-s">${ballSVG(42,'#9ca3af')}<div style="margin-top:14px;">No history yet.</div></div>`;
-  return`<div class="sec-title" style="margin-bottom:14px;">Session History</div>`+keys.map(k=>{const w=ST.weeks[k];return`<div class="hrow" onclick="viewHist('${k}')"><div><div style="font-size:14px;font-weight:500;">${fmtD(k)}</div><div style="font-size:12px;color:var(--t2);margin-top:3px;">${fmtTime12(w.openTime||'09:30')} – ${fmtTime12(w.closeTime||'19:00')} · ${w.votes?w.votes.length:0} players · ${w.teams?'Teams generated':'No teams'} · ${w.gamesWon?'<span style="color:#16a34a;font-weight:500;">Results saved</span>':'No results'}</div></div><span style="font-size:20px;color:var(--t3);">›</span></div>`;}).join('');
+  return`<div class="sec-title" style="margin-bottom:14px;">Session History</div>`+keys.map(k=>{const w=ST.weeks[k];return`<div class="hrow" onclick="viewHist('${k}')">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:14px;font-weight:500;">${fmtD(k)}</div>
+      <div style="font-size:12px;color:var(--t2);margin-top:3px;">${fmtTime12(w.openTime||'09:30')} – ${fmtTime12(w.closeTime||'19:00')} · ${w.votes?w.votes.length:0} players · ${w.teams?'Teams generated':'No teams'} · ${w.gamesWon?'<span style="color:#16a34a;font-weight:500;">Results saved</span>':'No results'}</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+      <button class="btn btn-d bsm" onclick="event.stopPropagation();deleteSession('${k}')" style="padding:5px 10px!important;min-height:34px!important;font-size:12px!important;">✕</button>
+      <span style="font-size:20px;color:var(--t3);">›</span>
+    </div>
+  </div>`;}).join('');
 }
 
 // ── ADMIN: DASHBOARD ──
@@ -762,9 +789,6 @@ function mWinners(prefix){
 
 // ══════════════════════════════════════════════
 //  USER: VOTE
-//  - Finds the currently open session dynamically (not hardcoded to today)
-//  - Shows upcoming sessions list with countdown to the next one
-//  - Countdown always reflects the closest session and cycles automatically
 // ══════════════════════════════════════════════
 function V_uh(){
   const todayK=todayKey();
@@ -772,18 +796,15 @@ function V_uh(){
   const nowM=ab.getHours()*60+ab.getMinutes();
   const fmt=getFmt();
 
-  // ── Find the active session: today's session within its voting window OR locked (quota hit) ──
   const todayWeek=ST.weeks[todayK];
   let activeSession=null;
   if(todayWeek){
     const openM=sessionOpenMins(todayWeek);
     const closeM=sessionCloseMins(todayWeek);
     const withinWindow=nowM>=openM&&nowM<closeM;
-    // Show if currently within window OR if quota-locked (so players can see the teams)
     if(withinWindow||todayWeek.locked)activeSession=todayWeek;
   }
 
-  // ── Future sessions (strictly after today) ──
   const futureSessions=Object.values(ST.weeks)
     .filter(w=>w.date>todayK)
     .sort((a,b)=>a.date.localeCompare(b.date));
@@ -791,14 +812,13 @@ function V_uh(){
   const info=getNextSessionInfo();
   let html='';
 
-  // ── Active session: show check-in form + session details ──
   if(activeSession){
     const isLocked=activeSession.locked;
     const vCount=(activeSession.votes||[]).length;
     const isOpenForVoting=!isLocked&&nowM>=sessionOpenMins(activeSession)&&nowM<sessionCloseMins(activeSession)&&vCount<fmt.target;
     const checkedIn=(activeSession.votes||[]).map(v=>v.name.toLowerCase());
     const available=ST.players.filter(p=>!checkedIn.includes(p.name.toLowerCase()));
-    const modeLbl={'2x5':'2 teams of 5','2x8':'2 teams of 8','3x5':'3 teams of 5','dropin':`Drop-in (${fmt.target})`}[fmt.mode]||'Teams';
+    const modeLbl={'2x4':'2 teams of 4','2x5':'2 teams of 5','2x6':'2 teams of 6','2x7':'2 teams of 7','2x8':'2 teams of 8','3x5':'3 teams of 5','dropin':`Drop-in (${fmt.target})`}[fmt.mode]||'Teams';
 
     if(isOpenForVoting){
       html+=`<div class="cta-card">
@@ -822,7 +842,6 @@ function V_uh(){
     html+=weekHTML(activeSession,false);
 
   } else {
-    // ── No active session right now — show no-session card with countdown ──
     if(!todayWeek){
       html+=noSess('No Session Today','No session is scheduled for today. Check the upcoming schedule below!');
     } else {
@@ -836,7 +855,6 @@ function V_uh(){
     }
   }
 
-  // ── Upcoming sessions list ── always shown so members can plan ahead ──
   if(futureSessions.length>0){
     html+=`<div style="display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px;">
       <div class="sec-title">Upcoming Sessions</div>
@@ -861,8 +879,6 @@ function V_uh(){
         </div>
       </div>`;
     });
-  } else if(!activeSession){
-    // No future sessions and no active session — empty state is already shown via noSess
   }
 
   return html;
@@ -1092,6 +1108,7 @@ async function deleteSession(weekDate){
   if(!confirm(`Delete the session on ${fmtD(weekDate)}?`))return;
   delete ST.weeks[weekDate];
   if(ST.selectedDate===weekDate)ST.selectedDate=null;
+  if(ST.historyKey===weekDate)ST.historyKey=null;
   await SAVE();renderV();
 }
 
@@ -1141,42 +1158,28 @@ async function saveGW(weekDate){
 
 // ══════════════════════════════════════════════
 //  CLOCK & AUTO-REFRESH TICKER
-//  Updates every second:
-//   1. The Alberta clock display
-//   2. All countdown elements (#vote-countdown, #user-cd)
-//   3. Auto-triggers a full re-render when a session opens
 // ══════════════════════════════════════════════
 let _renderPending=false;
 setInterval(()=>{
-  // Alberta clock
   const clockEl=document.getElementById('abclock');
   if(clockEl)clockEl.textContent=nowClock();
 
-  // Compute the current closest session
   const info=getNextSessionInfo();
 
-  // Main countdown (login screen + nosession card)
   const cdEl=document.getElementById('vote-countdown');
   if(info&&!info.isOpen&&cdEl){
     cdEl.textContent=fmtCountdown(info.ms);
   }
 
-  // Inline countdown in user upcoming-sessions header
   const userCdEl=document.getElementById('user-cd');
   if(info&&!info.isOpen&&userCdEl){
     userCdEl.textContent=fmtCountdown(info.ms);
   }
 
-  // Auto re-render when a session transitions to open (within 1.5s window)
   if(info&&!info.isOpen&&info.ms<=1500&&!_renderPending){
     _renderPending=true;
     setTimeout(()=>{_renderPending=false;renderV();},info.ms+200);
   }
-
-  // Also re-render when a session that was open just closed (nowM hits closeM)
-  // This is handled implicitly: getNextSessionInfo() will return the next session
-  // and the countdown display will change naturally. A full re-render fires via
-  // the 1s auto-refresh if the user is on the vote tab.
 },1000);
 
 // ══════════════════════════════════════════════
