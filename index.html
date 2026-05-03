@@ -212,6 +212,8 @@ select.vote-sel:focus{border-color:var(--navy);}
 .cta-card .cta-title{font-family:'Barlow Condensed',Impact,sans-serif;font-size:20px;font-weight:700;letter-spacing:.03em;margin-bottom:4px;}
 .cta-card .cta-sub{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:14px;}
 
+.loc-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;font-size:12px;color:rgba(255,255,255,.85);margin-bottom:12px;}
+
 .prof-back{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;animation:fIn .2s ease;}
 .prof-card{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:500px;box-shadow:0 -12px 50px rgba(0,0,0,.3);animation:sheetUp .35s cubic-bezier(.32,0,.67,0);overflow:hidden;max-height:88svh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:var(--safe-b);}
 .prof-handle{width:36px;height:4px;border-radius:2px;background:rgba(0,0,0,.12);margin:10px auto 0;}
@@ -271,6 +273,14 @@ function hideSync(delay){syncTimer=setTimeout(()=>{const el=document.getElementB
 
 const ADMIN={u:'LUESadmin',p:'Lacombe202620252024!@'};
 const USR={u:'LUESuser',p:'Users2026!!'};
+
+// ── PRESET LOCATIONS ──
+const PRESET_LOCS=[
+  'Lacombe Upper Elementary School',
+  'MEGlobal fields',
+  'Burman University Gym'
+];
+
 const COUNTRIES=[
   {n:'Afghanistan',f:'🇦🇫'},{n:'Albania',f:'🇦🇱'},{n:'Algeria',f:'🇩🇿'},{n:'Angola',f:'🇦🇴'},{n:'Argentina',f:'🇦🇷'},
   {n:'Australia',f:'🇦🇺'},{n:'Austria',f:'🇦🇹'},{n:'Bahrain',f:'🇧🇭'},{n:'Belgium',f:'🇧🇪'},{n:'Bolivia',f:'🇧🇴'},
@@ -432,7 +442,7 @@ function playerStats(name){
   return{won,played};
 }
 
-// ── FORMAT LABEL ── (includes ALL formats including 2x11 and 2x12)
+// ── FORMAT LABEL ──
 function fmtLabel(f){
   if(!f)return'3 teams of 5';
   return{
@@ -446,6 +456,53 @@ function fmtLabel(f){
     '3x5':'3 teams of 5',
     'dropin':`Drop-in (${f.target} players)`
   }[f.mode]||'3 teams of 5';
+}
+
+// ── LOCATION HELPERS ──
+function isCustomLoc(loc){return loc&&!PRESET_LOCS.includes(loc);}
+function locSelectHTML(idPrefix,curLoc){
+  const custom=isCustomLoc(curLoc);
+  const opts=PRESET_LOCS.map(l=>`<option value="${escH(l)}"${!custom&&curLoc===l?' selected':''}>${escH(l)}</option>`).join('');
+  return`<select id="${idPrefix}-sel" onchange="toggleLocCustom('${idPrefix}')" style="flex:1;min-width:130px;padding:7px 9px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text);min-height:38px;">
+    ${opts}
+    <option value="__custom__"${custom?' selected':''}>Other (specify)…</option>
+  </select>
+  <input type="text" id="${idPrefix}-custom" placeholder="Enter location…" value="${escH(custom?curLoc:'')}" style="display:${custom?'flex':'none'};flex:1;min-width:120px;padding:7px 9px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;min-height:38px;color:var(--text);background:#fff;">`;
+}
+function toggleLocCustom(idPrefix){
+  const sel=document.getElementById(idPrefix+'-sel');
+  const cust=document.getElementById(idPrefix+'-custom');
+  if(!sel||!cust)return;
+  cust.style.display=sel.value==='__custom__'?'flex':'none';
+}
+function getLocFromInputs(idPrefix){
+  const sel=document.getElementById(idPrefix+'-sel');
+  const cust=document.getElementById(idPrefix+'-custom');
+  if(!sel)return'';
+  if(sel.value==='__custom__')return(cust?.value?.trim()||'');
+  return sel.value;
+}
+
+// Scheduling form location helpers (inline select for schedule form)
+function schedLocSelectHTML(){
+  return`<select id="sched-loc-sel" onchange="toggleSchedLocCustom()" style="width:100%;padding:13px 14px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text);min-height:52px;">
+    ${PRESET_LOCS.map(l=>`<option value="${escH(l)}">${escH(l)}</option>`).join('')}
+    <option value="__custom__">Other (specify)…</option>
+  </select>
+  <input type="text" id="sched-loc-custom" placeholder="Enter custom location…" style="display:none;width:100%;margin-top:8px;padding:13px 14px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;color:var(--text);background:#fff;min-height:52px;">`;
+}
+function toggleSchedLocCustom(){
+  const sel=document.getElementById('sched-loc-sel');
+  const cust=document.getElementById('sched-loc-custom');
+  if(!sel||!cust)return;
+  cust.style.display=sel.value==='__custom__'?'block':'none';
+}
+function getSchedLoc(){
+  const sel=document.getElementById('sched-loc-sel');
+  const cust=document.getElementById('sched-loc-custom');
+  if(!sel)return PRESET_LOCS[0];
+  if(sel.value==='__custom__')return(cust?.value?.trim()||'');
+  return sel.value;
 }
 
 function iconPlayers(a){const c=a?'var(--navy)':'#9ca3af';return`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="3.5" stroke="${c}" stroke-width="1.8"/><path d="M3 19c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="${c}" stroke-width="1.8" stroke-linecap="round"/><circle cx="17" cy="8" r="2.5" stroke="${c}" stroke-width="1.6"/><path d="M20 18c0-2.21-1.343-3.5-3-3.5" stroke="${c}" stroke-width="1.6" stroke-linecap="round"/></svg>`;}
@@ -465,7 +522,9 @@ function showLoader(msg,dur,cb){
   if(dur<99999)setTimeout(()=>{d.style.transition='opacity .45s ease';d.style.opacity='0';setTimeout(()=>{d.remove();if(cb)cb();},460);},dur);
 }
 
+// ── SHOW PROFILE — skills/ratings hidden from members ──
 function showProfile(idOrName){
+  const isAdmin=ST.user&&ST.user.role==='admin';
   let pl=ST.players.find(p=>p.id===idOrName)||ST.players.find(p=>p.name.toLowerCase()===idOrName.toLowerCase());
   const notInRoster=!pl;
   if(!pl)pl={name:idOrName,skills:null,photo:null,nationality:null};
@@ -481,7 +540,7 @@ function showProfile(idOrName){
       <div style="display:flex;justify-content:center;margin-bottom:12px;margin-top:6px;">${avH(pl.name,pl.photo,84)}</div>
       <div style="font-family:'Barlow Condensed',Impact,sans-serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:.03em;">${escH(pl.name)}</div>
       ${ctry?`<div style="font-size:22px;margin-top:5px;">${ctry.f} <span style="font-size:12px;color:rgba(255,255,255,.5);vertical-align:middle;">${ctry.n}</span></div>`:'<div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:6px;">No nationality set</div>'}
-      ${!notInRoster&&pl.skills?`<div style="display:flex;justify-content:center;margin-top:12px;"><div class="ovb ${ovCls(sAvg(pl.skills))}" style="width:38px;height:38px;font-size:15px;">${sAvg(pl.skills)}</div><span style="font-size:12px;color:rgba(255,255,255,.45);margin-left:8px;align-self:center;">Overall /5</span></div>`:''}
+      ${isAdmin&&!notInRoster&&pl.skills?`<div style="display:flex;justify-content:center;margin-top:12px;"><div class="ovb ${ovCls(sAvg(pl.skills))}" style="width:38px;height:38px;font-size:15px;">${sAvg(pl.skills)}</div><span style="font-size:12px;color:rgba(255,255,255,.45);margin-left:8px;align-self:center;">Overall /5</span></div>`:''}
     </div>
     <div class="prof-body">
       <div class="stat-box" style="margin-bottom:18px;">
@@ -489,8 +548,7 @@ function showProfile(idOrName){
         <div class="stat-item"><div class="stat-val" style="color:var(--red);">${stats.won}</div><div class="stat-lbl">Games Won</div></div>
         <div class="stat-item"><div class="stat-val" style="color:#22c55e;">${stats.played>0?Math.round(stats.won/stats.played*10)/10:0}</div><div class="stat-lbl">Win/Session</div></div>
       </div>
-      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--t2);margin-bottom:10px;">Skills (out of 5)</div>
-      ${sBars(pl.skills)}
+      ${isAdmin?`<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--t2);margin-bottom:10px;">Skills (out of 5)</div>${sBars(pl.skills)}`:''}
       ${notInRoster?`<div style="margin-top:14px;padding:10px 13px;background:#fef3c7;border-radius:10px;font-size:12px;color:#92400e;">This player is not in the official roster.</div>`:''}
     </div>
   </div>`;
@@ -518,7 +576,7 @@ function buildTeamsObj(r,fmt){
   return{red:r.red,white:r.white,subs:r.subs};
 }
 
-// ── FORMAT BANNER ── (includes ALL formats including 2x11 and 2x12)
+// ── FORMAT BANNER ──
 function fmtBanner(ed){
   const f=getFmt();
   if(!ed)return`<div class="sfmt"><span class="sfmt-lbl">Format: <strong>${fmtLabel(f)}</strong> &nbsp;(${f.target} players needed)</span></div>`;
@@ -547,7 +605,6 @@ function fmtBanner(ed){
   </div>`;
 }
 
-// ── SET FORMAT ── (includes ALL formats including 2x11 and 2x12)
 async function setFmt(mode){
   const formats={
     '2x4':{mode:'2x4',perTeam:4,teams:2,target:8},
@@ -689,6 +746,7 @@ function V_aw(){
         <div class="fg"><label>Opens at</label><input type="time" id="sched-open" value="09:30" style="padding:13px 14px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:16px;font-family:'DM Sans',sans-serif;outline:none;width:100%;min-height:52px;color:var(--text);background:#fff;"></div>
         <div class="fg"><label>Closes at</label><input type="time" id="sched-close" value="19:00" style="padding:13px 14px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:16px;font-family:'DM Sans',sans-serif;outline:none;width:100%;min-height:52px;color:var(--text);background:#fff;"></div>
       </div>
+      <div class="fg"><label>📍 Location</label>${schedLocSelectHTML()}</div>
       <div style="font-size:11px;color:var(--t2);margin-bottom:12px;">Quota override: session locks automatically when enough players check in, regardless of close time.</div>
       <button class="btn btn-p" onclick="scheduleSession()">Schedule Session</button>
     </div>`;
@@ -712,6 +770,7 @@ function V_aw(){
           <div style="flex:1;min-width:0;">
             <div style="font-size:14px;font-weight:500;">${fmtD(w.date)}</div>
             <div style="font-size:12px;color:var(--t2);margin-top:3px;">${fmtTime12(w.openTime||'09:30')} - ${fmtTime12(w.closeTime||'19:00')} &middot; ${(w.votes||[]).length} players &middot; <span style="${w.locked?'color:var(--red)':'color:#16a34a'}">${w.locked?'Locked':'Open'}</span>${isNext?` &middot; <span style="color:var(--blue);font-weight:500;">Next up</span>`:''}</div>
+            ${w.location?`<div style="font-size:11px;color:var(--t2);margin-top:3px;">📍 ${escH(w.location)}</div>`:''}
           </div>
           <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
             <button class="btn btn-d bsm" onclick="event.stopPropagation();deleteSession('${w.date}')" style="padding:5px 10px!important;min-height:34px!important;font-size:12px!important;">X</button>
@@ -733,6 +792,7 @@ function V_ah(){
     <div style="flex:1;min-width:0;">
       <div style="font-size:14px;font-weight:500;">${fmtD(k)}</div>
       <div style="font-size:12px;color:var(--t2);margin-top:3px;">${fmtTime12(w.openTime||'09:30')} - ${fmtTime12(w.closeTime||'19:00')} &middot; ${w.votes?w.votes.length:0} players &middot; ${w.teams?'Teams generated':'No teams'} &middot; ${w.gamesWon?'<span style="color:#16a34a;font-weight:500;">Results saved</span>':'No results'}</div>
+      ${w.location?`<div style="font-size:11px;color:var(--t2);margin-top:2px;">📍 ${escH(w.location)}</div>`:''}
     </div>
     <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
       <button class="btn btn-d bsm" onclick="event.stopPropagation();deleteSession('${k}')" style="padding:5px 10px!important;min-height:34px!important;font-size:12px!important;">X</button>
@@ -794,6 +854,7 @@ function V_uh(){
     if(isOpenForVoting){
       html+=`<div class="cta-card">
         <div class="cta-title">Check in for today</div>
+        ${activeSession.location?`<div class="loc-pill">📍 ${escH(activeSession.location)}</div>`:''}
         <div class="cta-sub">Format: ${modeLbl} &middot; Locks at ${fmt.target} players &middot; Closes ${fmtTime12(activeSession.closeTime||'19:00')}</div>
         <div class="adv-row" style="margin-bottom:6px;">
           <select id="uv-sel" class="vote-sel" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;">
@@ -837,6 +898,7 @@ function V_uh(){
             <span style="font-size:12px;color:var(--t2);">${fmtTime12(w.openTime||'09:30')} - ${fmtTime12(w.closeTime||'19:00')}</span>
             <span style="font-size:11px;color:var(--t3);">&middot; Alberta time</span>
           </div>
+          ${w.location?`<div style="display:flex;align-items:center;gap:5px;margin-top:5px;"><span style="font-size:13px;">📍</span><span style="font-size:12px;color:var(--navy2);font-weight:500;">${escH(w.location)}</span></div>`:''}
           ${isNext?`<div style="margin-top:6px;font-size:11px;color:var(--blue);font-weight:600;">Next up &middot; Quota closes early if ${fmt.target} players check in</div>`:''}
         </div>
         <div style="text-align:right;flex-shrink:0;">
@@ -854,7 +916,7 @@ function V_uhist(){
     return`<button class="btn bsm" onclick="goBack()" style="margin-bottom:14px;">Back</button><div class="wdate" style="margin-bottom:12px;">${fmtD(w.date)}</div>${weekHTML(w,false)}`;}
   const keys=Object.keys(ST.weeks).sort((a,b)=>b.localeCompare(a));
   if(!keys.length)return`<div class="empty-s">${ballSVG(42,'#9ca3af')}<div style="margin-top:14px;">No history yet.</div></div>`;
-  return`<div class="sec-title" style="margin-bottom:14px;">Past Sessions</div>`+keys.map(k=>{const w=ST.weeks[k];return`<div class="hrow" onclick="viewHist('${k}')"><div><div style="font-size:14px;font-weight:500;">${fmtD(k)}</div><div style="font-size:12px;color:var(--t2);margin-top:3px;">${fmtTime12(w.openTime||'09:30')} - ${fmtTime12(w.closeTime||'19:00')} &middot; ${w.votes?w.votes.length:0} players</div></div><span style="font-size:20px;color:var(--t3);">›</span></div>`;}).join('');
+  return`<div class="sec-title" style="margin-bottom:14px;">Past Sessions</div>`+keys.map(k=>{const w=ST.weeks[k];return`<div class="hrow" onclick="viewHist('${k}')"><div><div style="font-size:14px;font-weight:500;">${fmtD(k)}</div><div style="font-size:12px;color:var(--t2);margin-top:3px;">${fmtTime12(w.openTime||'09:30')} - ${fmtTime12(w.closeTime||'19:00')} &middot; ${w.votes?w.votes.length:0} players${w.location?` &middot; 📍 ${escH(w.location)}`:''}</div></div><span style="font-size:20px;color:var(--t3);">›</span></div>`;}).join('');
 }
 
 function noSess(title,sub){
@@ -875,18 +937,35 @@ function noSess(title,sub){
   return`<div class="nosession"><div class="ns-ico">${ballSVG(26,'rgba(255,255,255,.7)')}</div><div class="ns-title">${title}</div><div class="ns-sub">${sub}</div><div class="ns-clock" id="abclock">--:-- --</div><div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);width:100%;text-align:center;">${cdHtml}</div></div>${postGameSection}`;
 }
 
+// ── WEEK HTML — skills/ratings hidden from members; location shown to all ──
 function weekHTML(week,isAdmin){
   if(!week)return'';
   const fmt=getFmt();const votes=week.votes||[],isLocked=week.locked,vCount=votes.length,hasTeams=!!week.teams;
   const pct=Math.min(100,Math.round(vCount/fmt.target*100));const quotaReached=vCount>=fmt.target||isLocked;
   const checkedIn=(week.votes||[]).map(v=>v.name.toLowerCase());
-  const timeRow=isAdmin?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;padding:10px 12px;background:#f4f7fb;border-radius:11px;">
+
+  // ── Location display ──
+  const curLoc=week.location||'';
+  const locIsCustom=isCustomLoc(curLoc);
+  const locationRow=isAdmin
+    ?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;padding:10px 12px;background:#f4f7fb;border-radius:11px;">
+        <span style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.07em;flex-shrink:0;">📍 Location:</span>
+        ${locSelectHTML('wt-loc-'+week.date, curLoc)}
+        <button class="btn bsm" onclick="updateSessionLocation('${week.date}')" style="flex-shrink:0;font-size:12px!important;">Update</button>
+      </div>`
+    :(curLoc?`<div style="display:flex;align-items:center;gap:7px;padding:9px 12px;background:#f0f4ff;border-radius:10px;margin-bottom:10px;border:1px solid #c7d7fe;">
+        <span style="font-size:16px;">📍</span>
+        <span style="font-size:13px;font-weight:500;color:var(--navy2);">${escH(curLoc)}</span>
+      </div>`:'');
+
+  const timeRow=isAdmin?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;padding:10px 12px;background:#f4f7fb;border-radius:11px;">
     <span style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.07em;flex-shrink:0;">Voting window:</span>
     <input type="time" id="wt-open-${week.date}" value="${week.openTime||'09:30'}" class="ti" style="flex:1;min-width:80px;">
     <span style="font-size:11px;color:var(--t2);">-</span>
     <input type="time" id="wt-close-${week.date}" value="${week.closeTime||'19:00'}" class="ti" style="flex:1;min-width:80px;">
     <button class="btn bsm" onclick="updateSessionTimes('${week.date}')" style="flex-shrink:0;font-size:12px!important;">Update</button>
   </div>`:'';
+
   const voterList=`<div class="card" style="margin-bottom:12px;">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
       <div>
@@ -903,6 +982,7 @@ function weekHTML(week,isAdmin){
         ${quotaReached?`<button class="btn bsm btn-p" onclick="doGenT('${week.date}')">${hasTeams?'Regen':'Gen teams'}</button>`:''}</div>`:''}
     </div>
     ${timeRow}
+    ${locationRow}
     <div class="prog"><div class="prog-f" style="width:${pct}%;"></div></div>
     ${votes.length===0?`<div style="font-size:13px;color:var(--t2);text-align:center;padding:14px 0;">No players registered yet.</div>`:''}
     ${votes.map((v,i)=>{
@@ -933,6 +1013,7 @@ function weekHTML(week,isAdmin){
         <button class="btn bsm btn-p" onclick="adminAV('${week.date}')">Add</button>
       </div>`:''}
   </div>`;
+
   let subsHTML='';
   if(quotaReached){
     const subsData=hasTeams&&week.teams&&week.teams.subs?week.teams.subs:votes.slice(fmt.target).map(v=>({name:v.name,timestamp:v.timestamp}));
@@ -941,6 +1022,7 @@ function weekHTML(week,isAdmin){
       ${subsData.length===0?`<div style="font-size:13px;color:var(--t2);">No subs this session.</div>`:subsData.map(s=>`<div class="prow" onclick="showProfile('${escH(s.name)}')">${avH(s.name,null,28)}<span style="font-size:13px;flex:1;">${escH(s.name)}</span><span style="font-size:10px;color:var(--t3);">${fmtT(s.timestamp)}</span></div>`).join('')}
     </div>`;
   }
+
   let teamsHTML='';
   if(hasTeams&&week.teams){
     const t=week.teams;teamsHTML=`<div class="sec-title" style="margin-bottom:10px;">Teams</div>`;
@@ -950,8 +1032,8 @@ function weekHTML(week,isAdmin){
     else defs=[{k:'red',lbl:'Red Team',cls:'tc-r',dot:'#d92b2b'},{k:'white',lbl:'White Team',cls:'tc-w',dot:'#4b5563'}];
     defs.forEach(d=>{
       const players=t[d.k]||[];const avg=players.length?Math.min(5,Math.round(players.reduce((s,p)=>s+p.overall,0)/players.length)):0;
-      teamsHTML+=`<div class="tcard ${d.cls}"><div class="tc-hdr"><div class="tcdot" style="background:${d.dot};"></div><span class="tc-nm">${d.lbl}</span><span class="tc-avg">Avg ${avg}/5</span></div>
-        ${players.map(p=>{const rp=ST.players.find(r=>r.name.toLowerCase()===p.name.toLowerCase());const ctry=rp&&rp.nationality?COUNTRIES.find(c=>c.n===rp.nationality):null;return`<div class="prow" onclick="showProfile('${escH(p.name)}')">${avH(p.name,(rp&&rp.photo)||p.photo,32)}<span style="font-size:13px;font-weight:500;flex:1;">${escH(p.name)} ${ctry?ctry.f:''}</span><div class="ovb ${ovCls(p.overall)}" style="width:28px;height:28px;font-size:11px;">${p.overall}</div></div>`;}).join('')}
+      teamsHTML+=`<div class="tcard ${d.cls}"><div class="tc-hdr"><div class="tcdot" style="background:${d.dot};"></div><span class="tc-nm">${d.lbl}</span>${isAdmin?`<span class="tc-avg">Avg ${avg}/5</span>`:''}</div>
+        ${players.map(p=>{const rp=ST.players.find(r=>r.name.toLowerCase()===p.name.toLowerCase());const ctry=rp&&rp.nationality?COUNTRIES.find(c=>c.n===rp.nationality):null;return`<div class="prow" onclick="showProfile('${escH(p.name)}')">${avH(p.name,(rp&&rp.photo)||p.photo,32)}<span style="font-size:13px;font-weight:500;flex:1;">${escH(p.name)} ${ctry?ctry.f:''}</span>${isAdmin?`<div class="ovb ${ovCls(p.overall)}" style="width:28px;height:28px;font-size:11px;">${p.overall}</div>`:''}</div>`;}).join('')}
       </div>`;
     });
     if(isAdmin&&fmt.mode!=='dropin'){
@@ -1037,7 +1119,7 @@ async function delPl(id){if(!confirm('Delete this player?'))return;ST.players=ST
 
 async function createTodaySession(){
   const key=todayKey();
-  if(!ST.weeks[key])ST.weeks[key]={date:key,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00'};
+  if(!ST.weeks[key])ST.weeks[key]={date:key,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00',location:''};
   await SAVE();renderV();
 }
 async function scheduleSession(){
@@ -1046,7 +1128,8 @@ async function scheduleSession(){
   if(ST.weeks[date]){alert('A session already exists for this date.');ST.schedulingNew=false;if(date!==todayKey())ST.selectedDate=date;renderV();return;}
   const openTime=document.getElementById('sched-open')?.value||'09:30';
   const closeTime=document.getElementById('sched-close')?.value||'19:00';
-  ST.weeks[date]={date,votes:[],locked:false,teams:null,openTime,closeTime};
+  const location=getSchedLoc();
+  ST.weeks[date]={date,votes:[],locked:false,teams:null,openTime,closeTime,location};
   ST.schedulingNew=false;
   if(date!==todayKey())ST.selectedDate=date;
   await SAVE();renderV();
@@ -1067,12 +1150,19 @@ async function updateSessionTimes(weekDate){
   week.closeTime=closeEl.value||'19:00';
   await SAVE();renderV();
 }
+// ── UPDATE SESSION LOCATION ──
+async function updateSessionLocation(weekDate){
+  const week=ST.weeks[weekDate];if(!week)return;
+  const loc=getLocFromInputs('wt-loc-'+weekDate);
+  week.location=loc||'';
+  await SAVE();renderV();
+}
 async function userVote(){
   const name=(document.getElementById('uv-sel')?.value||'').trim();
   const msg=document.getElementById('uv-m');
   if(!name){if(msg)msg.innerHTML=`<span style="color:#fca5a5;">Please select your name.</span>`;return;}
   const fmt=getFmt();const key=todayKey();
-  if(!ST.weeks[key])ST.weeks[key]={date:key,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00'};
+  if(!ST.weeks[key])ST.weeks[key]={date:key,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00',location:''};
   const week=ST.weeks[key];
   if(week.locked||week.votes.length>=fmt.target){if(msg)msg.innerHTML=`<span style="color:#fca5a5;">Voting is closed.</span>`;return;}
   if(week.votes.some(v=>v.name.toLowerCase()===name.toLowerCase())){if(msg)msg.innerHTML=`<span style="color:#fde68a;">${escH(name)} is already checked in.</span>`;return;}
@@ -1082,7 +1172,7 @@ async function userVote(){
 }
 async function adminAV(weekDate){
   const name=(document.getElementById('av-sel')?.value||'').trim();if(!name)return;
-  if(!ST.weeks[weekDate])ST.weeks[weekDate]={date:weekDate,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00'};
+  if(!ST.weeks[weekDate])ST.weeks[weekDate]={date:weekDate,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00',location:''};
   const week=ST.weeks[weekDate];const fmt=getFmt();
   if(week.votes.some(v=>v.name.toLowerCase()===name.toLowerCase())){alert(`${name} already checked in.`);return;}
   week.votes.push({name,timestamp:new Date().toISOString()});
@@ -1090,7 +1180,7 @@ async function adminAV(weekDate){
   await SAVE();renderV();
 }
 async function rmV(weekDate,idx){const week=ST.weeks[weekDate];if(!week)return;week.votes.splice(idx,1);await SAVE();renderV();}
-async function toggleLock(weekDate){if(!ST.weeks[weekDate])ST.weeks[weekDate]={date:weekDate,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00'};ST.weeks[weekDate].locked=!ST.weeks[weekDate].locked;await SAVE();renderV();}
+async function toggleLock(weekDate){if(!ST.weeks[weekDate])ST.weeks[weekDate]={date:weekDate,votes:[],locked:false,teams:null,openTime:'09:30',closeTime:'19:00',location:''};ST.weeks[weekDate].locked=!ST.weeks[weekDate].locked;await SAVE();renderV();}
 async function doGenT(weekDate){const week=ST.weeks[weekDate];if(!week)return;const fmt=getFmt();const r=genTeams(week.votes);week.teams=buildTeamsObj(r,fmt);await SAVE();renderV();}
 async function saveGW(weekDate){
   const week=ST.weeks[weekDate];if(!week)return;const fmt=getFmt();if(fmt.mode==='dropin')return;
